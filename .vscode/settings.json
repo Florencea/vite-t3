@@ -1,0 +1,13 @@
+{
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.rules.customizations": [
+    {
+      "rule": "*",
+      "severity": "warn"
+    }
+  ],
+  "markdownlint.config": {
+    "MD041": false
+  },
+  "typescript.tsdk": "node_modules/typescript/lib"
+}

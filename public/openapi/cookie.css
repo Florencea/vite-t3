@@ -1,0 +1,15 @@
+.swagger-ui .auth-wrapper .authorize,
+.swagger-ui .authorization__btn > svg {
+  display: none;
+}
+
+.swagger-ui .authorization__btn {
+  pointer-events: none;
+  cursor: default;
+}
+
+.swagger-ui .authorization__btn::before {
+  font-size: 14px;
+  opacity: 0.5;
+  content: "Protected Route";
+}

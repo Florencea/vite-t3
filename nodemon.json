@@ -1,0 +1,11 @@
+{
+  "delay": 1,
+  "quiet": true,
+  "verbose": true,
+  "watch": ["src/server", "src/locales", ".env", "package.json"],
+  "execMap": {
+    "ts": "tsx",
+    "tsx": "tsx"
+  },
+  "ext": "js,ts,jsx,tsx,json,md"
+}
