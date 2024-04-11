@@ -19,6 +19,9 @@ import {
   DOC_STATIC_PATH,
   DOC_STATIC_ROUTE,
   DOC_TYPEGEN_ROUTE,
+  ENABLE_CLIENT,
+  ENABLE_OPENAPI,
+  ENABLE_SERVER,
   IS_PRODCTION,
   OUTDIR,
   PORT,
@@ -35,17 +38,21 @@ const app = express();
 /**
  * Essential middleware
  */
-app.disable("x-powered-by");
-app.use(cors());
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(compression());
+if (ENABLE_SERVER) {
+  app.disable("x-powered-by");
+  app.use(cors());
+  app.use(bodyParser.json());
+  app.use(cookieParser());
+  app.use(compression());
+}
 
 /**
  * Secure middleware in prodction
  */
 if (IS_PRODCTION) {
-  app.use(helmet());
+  if (ENABLE_SERVER) {
+    app.use(helmet());
+  }
   /**
    * Config for viteless production mode
    */
@@ -61,8 +68,10 @@ if (IS_PRODCTION) {
 /**
  * i18n
  */
-void i18n.use(i18nMiddleware.LanguageDetector).init(i18n.options);
-app.use(i18nMiddleware.handle(i18n));
+if (ENABLE_SERVER) {
+  void i18n.use(i18nMiddleware.LanguageDetector).init(i18n.options);
+  app.use(i18nMiddleware.handle(i18n));
+}
 
 const middlewareConfig = {
   router: appRouter,
@@ -75,19 +84,31 @@ const middlewareConfig = {
 /**
  * API controllers
  */
-app.use(API_ENDPOINT_TRPC, createExpressMiddleware(middlewareConfig));
-app.use(
-  API_ENDPOINT_RESTFUL,
-  createOpenApiExpressMiddleware(middlewareConfig) as Handler,
-);
+if (ENABLE_SERVER) {
+  app.use(API_ENDPOINT_TRPC, createExpressMiddleware(middlewareConfig));
+}
+if (ENABLE_OPENAPI) {
+  app.use(
+    API_ENDPOINT_RESTFUL,
+    createOpenApiExpressMiddleware(middlewareConfig) as Handler,
+  );
+}
 
 /**
  * OpenAPI and typegen controllers
  */
-app.use(DOC_TYPEGEN_ROUTE, typegenController);
-app.use(DOC_STATIC_ROUTE, express.static(DOC_STATIC_PATH));
-app.use(DOC_ROUTE, serve, setup(openapiDocs, SWAGGER_UI_OPTIONS));
+if (ENABLE_OPENAPI) {
+  app.use(DOC_TYPEGEN_ROUTE, typegenController);
+  app.use(DOC_STATIC_ROUTE, express.static(DOC_STATIC_PATH));
+  app.use(DOC_ROUTE, serve, setup(openapiDocs, SWAGGER_UI_OPTIONS));
+}
 
-ViteExpress.listen(app, PORT, () => {
-  console.info(SERVER_READY_MESSAGE);
-});
+if (ENABLE_CLIENT) {
+  ViteExpress.listen(app, PORT, () => {
+    console.info(SERVER_READY_MESSAGE);
+  });
+} else {
+  app.listen(PORT, () => {
+    console.info(SERVER_READY_MESSAGE);
+  });
+}

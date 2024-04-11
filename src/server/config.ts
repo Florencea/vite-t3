@@ -27,6 +27,56 @@ const getEnv = ({
   }
 };
 
+const getEnvFlag = ({
+  env,
+  from = ".env",
+  field = env,
+}: {
+  env: string;
+  from?: string;
+  field?: string;
+}) => {
+  const ENV = getEnv({ env, from, field });
+  if (ENV === "1") {
+    return true;
+  } else if (ENV === "0") {
+    return false;
+  } else {
+    const errorMsg = chalk.red(
+      `Flag \`${field}\` must be \`1\` or \`0\`in \`${from}\`, exit`,
+    );
+    console.error(errorMsg);
+    exit(1);
+  }
+};
+
+/**
+ * Enable client
+ *
+ * from: `env.ENABLE_CLIENT`
+ *
+ * value: Boolean, ex: `true`
+ */
+export const ENABLE_CLIENT = getEnvFlag({ env: "ENABLE_CLIENT" });
+
+/**
+ * Enable server
+ *
+ * from: `env.ENABLE_SERVER`
+ *
+ * value: Boolean, ex: `true`
+ */
+export const ENABLE_SERVER = getEnvFlag({ env: "ENABLE_SERVER" });
+
+/**
+ * Enable openapi
+ *
+ * from: `env.ENABLE_OPENAPI`
+ *
+ * value: Boolean, ex: `true`
+ */
+export const ENABLE_OPENAPI = getEnvFlag({ env: "ENABLE_OPENAPI" });
+
 /**
  * Is Server in production
  */
@@ -171,14 +221,16 @@ export const DOC_STATIC_PATH = IS_PRODCTION
  *
  * value: String, ex: content from `dist/client/openapi/"DESCRIPTION.md`
  */
-export const DOC_DESCRIPTION = readFileSync(
-  IS_PRODCTION
-    ? join(OUTDIR, "openapi", "DESCRIPTION.md")
-    : join(cwd(), "public", "openapi", "DESCRIPTION.md"),
-  {
-    encoding: "utf-8",
-  },
-);
+export const DOC_DESCRIPTION = ENABLE_OPENAPI
+  ? readFileSync(
+      IS_PRODCTION
+        ? join(OUTDIR, "openapi", "DESCRIPTION.md")
+        : join(cwd(), "public", "openapi", "DESCRIPTION.md"),
+      {
+        encoding: "utf-8",
+      },
+    )
+  : undefined;
 
 /**
  * OpenAPI config
