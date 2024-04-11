@@ -13,7 +13,7 @@ export const useUserInfo = () => {
   const queryClient = useQueryClient();
 
   const menuItems = useMemo(() => {
-    return MENU_ITEMS.filter(({ authorized }) => authorized).map((item) => ({
+    return MENU_ITEMS.filter(({ icon }) => Boolean(icon)).map((item) => ({
       ...item,
       label: t(item.key),
     }));

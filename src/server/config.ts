@@ -6,28 +6,45 @@ import { join } from "node:path";
 import { cwd, exit } from "node:process";
 import type { SwaggerUiOptions } from "swagger-ui-express";
 
+const getEnv = ({
+  env,
+  from = ".env",
+  field = env,
+}: {
+  env: string;
+  from?: string;
+  field?: string;
+}) => {
+  const ENV = process.env[env];
+  if (!ENV) {
+    const errorMsg = chalk.red(
+      `No \`${field}\` field found in \`${from}\`, exit`,
+    );
+    console.error(errorMsg);
+    exit(1);
+  } else {
+    return ENV;
+  }
+};
+
 /**
  * Is Server in production
  */
 export const IS_PRODCTION = process.env.NODE_ENV === "production";
 
-if (!process.env.npm_package_version) {
-  console.error("No `version` field found in `package.json`, exit");
-  exit(1);
-}
 /**
  * API version
  *
  * from: `package.json.version`
  *
- * value: String, ex: 0.0.0
+ * value: String, ex: `0.0.0`
  */
-export const VERSION = process.env.npm_package_version;
+export const VERSION = getEnv({
+  env: "npm_package_version",
+  from: "package.json",
+  field: "version",
+});
 
-if (!process.env.PORT) {
-  console.error("No `PORT` field found in `.env`, exit");
-  exit(1);
-}
 /**
  * Server port to listen
  *
@@ -35,111 +52,124 @@ if (!process.env.PORT) {
  *
  * value: Integer, ex: 4000
  */
-export const PORT = parseInt(process.env.PORT);
+export const PORT = parseInt(getEnv({ env: "PORT" }));
 
-if (!process.env.VITE_WEB_BASE) {
-  console.error("No `VITE_WEB_BASE` field found in `.env`, exit");
-  exit(1);
-}
 /**
  * Server web base
  *
  * from: `env.VITE_WEB_BASE`
  *
- * value: String, ex: "/"
+ * value: String, ex: `/`
  */
-export const BASE = process.env.VITE_WEB_BASE;
+export const BASE = getEnv({ env: "VITE_WEB_BASE" });
 
-if (!process.env.VITE_OUTDIR) {
-  console.error("No `VITE_OUTDIR` field found in `.env`, exit");
-  exit(1);
-}
 /**
  * Client output directory for Deployment
  *
  * from: `env.VITE_OUTDIR` + `/client`
  *
- * value: String, ex: "dist"
+ * value: String, ex: `dist/client`
  */
-export const OUTDIR = join(process.env.VITE_OUTDIR, "client");
+export const OUTDIR = join(getEnv({ env: "VITE_OUTDIR" }), "client");
 
-if (!process.env.VITE_API_ENDPOINT_RESTFUL) {
-  console.error("No `VITE_API_ENDPOINT_RESTFUL` field found in `.env`, exit");
-  exit(1);
-}
 /**
  * Server restful API route prefix
  *
  * from: `env.VITE_API_ENDPOINT_RESTFUL`
  *
- * value: ex: `/api/restful`
+ * value: String, ex: `/api/restful`
  */
-export const API_ENDPOINT_RESTFUL = process.env.VITE_API_ENDPOINT_RESTFUL;
+export const API_ENDPOINT_RESTFUL = getEnv({
+  env: "VITE_API_ENDPOINT_RESTFUL",
+});
 
-if (!process.env.VITE_API_ENDPOINT_TRPC) {
-  console.error("No `VITE_API_ENDPOINT_TRPC` field found in `.env`, exit");
-  exit(1);
-}
 /**
  * Server tRPC API route prefix
  *
- * from: env.VITE_API_ENDPOINT_TRPC`
+ * from: `env.VITE_API_ENDPOINT_TRPC`
  *
- * value: ex: `/api/trpc`
+ * value: String, ex: `/api/trpc`
  */
-export const API_ENDPOINT_TRPC = process.env.VITE_API_ENDPOINT_TRPC;
+export const API_ENDPOINT_TRPC = getEnv({ env: "VITE_API_ENDPOINT_TRPC" });
 
-if (!process.env.COOKIE_NAME) {
-  console.error("No `COOKIE_NAME` field found in `.env`, exit");
-  exit(1);
-}
 /**
  * encrypted cookie name
+ *
+ * from: `env.COOKIE_NAME`
+ *
+ * value: String, ex: `TestViteT3`
  */
-export const COOKIE_NAME = process.env.COOKIE_NAME;
+export const COOKIE_NAME = getEnv({ env: "COOKIE_NAME" });
 
-if (!process.env.COOKIE_SECRET) {
-  console.error("No `COOKIE_SECRET` field found in `.env`, exit");
-  exit(1);
-}
 /**
  * encrypted cookie secret
+ *
+ * from: `env.COOKIE_SECRET`
+ *
+ * value: String, ex: `a long secret at least 32 characters long`
  */
-export const COOKIE_SECRET = process.env.COOKIE_SECRET;
+export const COOKIE_SECRET = getEnv({ env: "COOKIE_SECRET" });
 
-if (!process.env.VITE_TITLE) {
-  console.error("No `VITE_TITLE` field found in `.env`, exit");
-  exit(1);
-}
 /**
  * OpenAPI doc title
+ *
+ * from: `env.VITE_TITLE` + `OpenAPI`
+ *
+ * value: String, ex: `Test Vite T3 OpenAPI`
  */
-export const DOC_TITLE = `${process.env.VITE_TITLE} OpenAPI`;
+export const DOC_TITLE = [getEnv({ env: "VITE_TITLE" }), "OpenAPI"].join(" ");
 
-if (!process.env.VITE_API_OPENAPI_DOC_ROUTE) {
-  console.error("No `VITE_API_OPENAPI_DOC_ROUTE` field found in `.env`, exit");
-  exit(1);
-}
 /**
  * OpenAPI doc route
+ *
+ * from: `env.VITE_WEB_BASE` + `env.VITE_API_OPENAPI_DOC_ROUTE`
+ *
+ * value: String, ex: `/openapi`
  */
-export const DOC_ROUTE = join(BASE, process.env.VITE_API_OPENAPI_DOC_ROUTE);
+export const DOC_ROUTE = join(
+  BASE,
+  getEnv({ env: "VITE_API_OPENAPI_DOC_ROUTE" }),
+);
+
 /**
  * OpenAPI typegen route
+ *
+ * from: `env.VITE_WEB_BASE` + `env.VITE_API_OPENAPI_DOC_ROUTE` + `/typegen`
+ *
+ * value: String, ex: `/openapi/typegen`
  */
 export const DOC_TYPEGEN_ROUTE = join(DOC_ROUTE, "typegen");
+
 /**
  * OpenAPI static file path
+ *
+ * from: `env.VITE_WEB_BASE` + `env.VITE_API_OPENAPI_DOC_ROUTE` + `/assets`
+ *
+ * value: String, ex: `/openapi/assets`
  */
 export const DOC_STATIC_ROUTE = join(DOC_ROUTE, "assets");
+
 /**
  * OpenAPI static file path
+ *
+ * In production from: `env.VITE_OUTDIR` + `/client/openapi`
+ *
+ * In development from `cwd()` + `/public/openapi`
+ *
+ * value: String, ex: `dist/client/openapi`
  */
 export const DOC_STATIC_PATH = IS_PRODCTION
   ? join(OUTDIR, "openapi")
   : join(cwd(), "public", "openapi");
+
 /**
  * OpenAPI Swagger UI Description
+ *
+ * In production read from: `env.VITE_OUTDIR` + `/client/openapi/DESCRIPTION.md`
+ *
+ * In development read from `cwd()` + `/public/openapi/DESCRIPTION.md`
+ *
+ * value: String, ex: content from `dist/client/openapi/"DESCRIPTION.md`
  */
 export const DOC_DESCRIPTION = readFileSync(
   IS_PRODCTION
@@ -149,6 +179,7 @@ export const DOC_DESCRIPTION = readFileSync(
     encoding: "utf-8",
   },
 );
+
 /**
  * OpenAPI config
  */
@@ -192,6 +223,7 @@ const serverUrl = chalk.bold(
     ? `port: ${PORT}, base: ${BASE}`
     : `http://localhost:${PORT}${BASE}`,
 );
+
 /**
  * Server ready message
  */

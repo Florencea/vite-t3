@@ -22,21 +22,21 @@ export interface MenuItemT {
   label: string;
   key: RoutePath;
   icon: ReactNode;
-  authorized: boolean;
 }
 
+/**
+ * Item won't appear in side menu if `icon` is `null`,
+ */
 export const MENU_ITEMS: MenuItemT[] = [
   {
     label: "登入",
     key: "/login",
     icon: null,
-    authorized: false,
   },
   {
     label: "帳號管理",
     key: "/user",
     icon: <TeamOutlined />,
-    authorized: true,
   },
 ];
 
