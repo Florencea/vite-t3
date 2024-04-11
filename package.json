@@ -29,7 +29,7 @@
     "i18next-browser-languagedetector": "^7.2.1",
     "i18next-http-middleware": "^3.5.0",
     "iron-session": "^8.0.1",
-    "quicktype-core": "^23.0.115",
+    "quicktype-core": "^23.0.116",
     "react-i18next": "^14.1.0",
     "swagger-ui-express": "^5.0.0",
     "trpc-openapi": "^1.2.0",
