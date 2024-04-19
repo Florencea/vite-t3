@@ -34,7 +34,7 @@
     "swagger-ui-express": "^5.0.0",
     "trpc-openapi": "^1.2.0",
     "vite-express": "^0.16.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.5"
   },
   "devDependencies": {
     "@ant-design/cssinjs": "^1.20.0",
