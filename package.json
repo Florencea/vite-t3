@@ -41,7 +41,7 @@
     "@ant-design/icons": "^5.3.6",
     "@eslint/js": "^8.57.0",
     "@tanstack/react-query": "^4.36.1",
-    "@tanstack/react-router": "^1.28.9",
+    "@tanstack/react-router": "^1.29.2",
     "@tanstack/router-vite-plugin": "^1.28.2",
     "@trpc/client": "^10.45.2",
     "@trpc/react-query": "^10.45.2",
