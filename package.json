@@ -30,7 +30,7 @@
     "i18next-http-middleware": "^3.5.0",
     "iron-session": "^8.0.1",
     "quicktype-core": "^23.0.151",
-    "react-i18next": "^14.1.0",
+    "react-i18next": "^14.1.1",
     "swagger-ui-express": "^5.0.0",
     "trpc-openapi": "^1.2.0",
     "vite-express": "^0.16.0",
