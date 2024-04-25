@@ -73,7 +73,7 @@
     "react-head": "^3.4.2",
     "rollup": "^4.16.4",
     "rollup-plugin-esbuild": "^6.1.1",
-    "rollup-plugin-node-externals": "^7.1.1",
+    "rollup-plugin-node-externals": "^7.1.2",
     "tailwindcss": "^3.4.3",
     "tsx": "^4.7.2",
     "typescript": "^5.4.5",
