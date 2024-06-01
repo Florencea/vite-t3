@@ -31,7 +31,7 @@
     "iron-session": "^8.0.1",
     "quicktype-core": "^23.0.170",
     "react-i18next": "^14.1.2",
-    "swagger-ui-express": "^5.0.0",
+    "swagger-ui-express": "^5.0.1",
     "trpc-openapi": "^1.2.0",
     "vite-express": "^0.16.0",
     "zod": "^3.23.8"
