@@ -15,7 +15,10 @@ export const useUserInfo = () => {
   const menuItems = useMemo(() => {
     return MENU_ITEMS.filter(({ icon }) => Boolean(icon)).map((item) => ({
       ...item,
-      label: t(item.key),
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      label: `${t(item.key)}`,
     }));
   }, [t]);
 

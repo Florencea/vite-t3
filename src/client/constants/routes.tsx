@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-router";
 import type { inferReactQueryProcedureOptions } from "@trpc/react-query";
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
-import type { ReactNode } from "react";
+import type { MenuProps } from "antd";
 import type { AppRouter } from "../../server/router";
 import { routeTree } from "../routeTree.gen";
 
@@ -18,27 +18,24 @@ export type ReactQueryOptions = inferReactQueryProcedureOptions<AppRouter>;
 export type RouterInputs = inferRouterInputs<AppRouter>;
 export type RouterOutputs = inferRouterOutputs<AppRouter>;
 
-export interface MenuItemT {
-  label: string;
-  key: RoutePath;
-  icon: ReactNode;
-}
+type MenuItemsT = Required<MenuProps>["items"];
 
 /**
  * Item won't appear in side menu if `icon` is `null`,
  */
-export const MENU_ITEMS: MenuItemT[] = [
+export const MENU_ITEMS = [
   {
     label: "登入",
     key: "/login",
     icon: null,
+    children: [],
   },
   {
     label: "帳號管理",
     key: "/user",
     icon: <TeamOutlined />,
   },
-];
+] satisfies MenuItemsT;
 
 export const router = createRouter({
   routeTree: routeTree,
@@ -57,10 +54,10 @@ export const useSiteTitle = () => {
   } = useRouterState();
 
   const currentLabel = MENU_ITEMS.find(
-    ({ key }) => key.toString() === pathname,
-  )?.label?.toString();
+    (item) => item?.key?.toString() === pathname,
+  );
 
   return currentLabel
-    ? `${currentLabel} - ${import.meta.env.VITE_TITLE}`
+    ? `${currentLabel.label} - ${import.meta.env.VITE_TITLE}`
     : import.meta.env.VITE_TITLE;
 };
