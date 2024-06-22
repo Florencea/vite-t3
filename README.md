@@ -1,4 +1,6 @@
-# test-vite-t3
+# Vite T3
+
+- A fullstack project like T3 stack
 
 ## Usage (in `.env`)
 
