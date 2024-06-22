@@ -57,7 +57,7 @@ const AntdProvider = ({ container, children }: ProviderProps) => {
       getPopupContainer={() => container}
       locale={antdLocales[i18n.language]}
       theme={theme}
-      autoInsertSpaceInButton={false}
+      button={{ autoInsertSpace: false }}
     >
       <StyleProvider hashPriority="high">
         <App>{children}</App>
