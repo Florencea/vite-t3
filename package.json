@@ -77,7 +77,7 @@
     "tsx": "^4.16.2",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.0-alpha.39",
-    "vite": "^5.3.2"
+    "vite": "^5.3.3"
   },
   "prisma": {
     "seed": "tsx src/server/database/seed.ts"
