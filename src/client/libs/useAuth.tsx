@@ -20,7 +20,7 @@ export const useAuth = () => {
   const loginForm = useAntdForm<RouterInputs["auth"]["login"]>({
     formProps: {
       layout: "vertical",
-      disabled: login.isLoading,
+      disabled: login.isPending,
       onFinish: login.mutate,
     },
     formItemProps: {
@@ -37,5 +37,5 @@ export const useAuth = () => {
     },
   });
 
-  return { loginForm, isLoading: login.isLoading, logout };
+  return { loginForm, isLoading: login.isPending, logout };
 };

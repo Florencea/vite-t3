@@ -1,4 +1,5 @@
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
+import { createOpenApiExpressMiddleware } from "better-trpc-openapi";
 import bodyParser from "body-parser";
 import compression from "compression";
 import cookieParser from "cookie-parser";
@@ -8,7 +9,6 @@ import helmet from "helmet";
 import i18nMiddleware from "i18next-http-middleware";
 import { cwd } from "node:process";
 import { serve, setup } from "swagger-ui-express";
-import { createOpenApiExpressMiddleware } from "trpc-openapi";
 import ViteExpress from "vite-express";
 import i18n from "../i18n";
 import {
