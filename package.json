@@ -7,7 +7,7 @@
     "build": "npm run lint && vite build",
     "dev": "nodemon src/server/app.ts",
     "format": "prettier \"**/*\" --write --ignore-unknown",
-    "lint": "eslint && tsc",
+    "lint": "eslint . && tsc",
     "migrate": "prisma migrate dev --name init",
     "start": "NODE_ENV=production node dist/server/app.js"
   },
@@ -42,7 +42,7 @@
     "@eslint/js": "^9.9.0",
     "@tanstack/react-query": "^5.52.1",
     "@tanstack/react-router": "^1.49.2",
-    "@tanstack/router-vite-plugin": "^1.49.3",
+    "@tanstack/router-plugin": "^1.49.3",
     "@trpc/client": "^11.0.0-rc.485",
     "@trpc/react-query": "^11.0.0-rc.485",
     "@types/body-parser": "^1.19.5",

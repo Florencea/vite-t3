@@ -1,8 +1,12 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { Empty } from "antd";
 import logo from "../assets/logo.png";
 
-const Page = () => {
+export const Route = createFileRoute("/")({
+  component: Page,
+});
+
+function Page() {
   return (
     <div className="flex h-full w-full items-center justify-center">
       <Empty
@@ -17,8 +21,4 @@ const Page = () => {
       />
     </div>
   );
-};
-
-export const Route = createLazyFileRoute("/")({
-  component: Page,
-});
+}

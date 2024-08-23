@@ -1,4 +1,4 @@
-import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { cp, rm } from "node:fs/promises";
 import { join } from "node:path";
@@ -95,14 +95,15 @@ export default defineConfig({
     reportCompressedSize: false,
   },
   plugins: [
-    react(),
     TanStackRouterVite({
       routesDirectory: "./src/client/routes",
       generatedRouteTree: "./src/client/routeTree.gen.ts",
       quoteStyle: "double",
       semicolons: true,
       disableLogging: true,
+      autoCodeSplitting: true,
     }),
+    react(),
     ClearOutdir(),
     enableServer ? ServerBuilder() : undefined,
     enableClient ? undefined : RemoveClientAssets(),

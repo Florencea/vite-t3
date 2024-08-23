@@ -7,6 +7,7 @@ import {
 import type { inferReactQueryProcedureOptions } from "@trpc/react-query";
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import type { MenuProps } from "antd";
+import { useTranslation } from "react-i18next";
 import type { AppRouter } from "../../server/router";
 import { routeTree } from "../routeTree.gen";
 
@@ -49,6 +50,7 @@ declare module "@tanstack/react-router" {
 }
 
 export const useSiteTitle = () => {
+  const {t} = useTranslation("routes");
   const {
     location: { pathname },
   } = useRouterState();
@@ -58,6 +60,7 @@ export const useSiteTitle = () => {
   );
 
   return currentLabel
-    ? `${currentLabel.label} - ${import.meta.env.VITE_TITLE}`
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    ? `${t(currentLabel.key, {defaultValue: currentLabel.label})} - ${import.meta.env.VITE_TITLE}`
     : import.meta.env.VITE_TITLE;
 };
