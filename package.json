@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.19.1",
-    "@trpc/server": "^11.0.0-rc.490",
+    "@trpc/server": "^11.0.0-rc.498",
     "argon2": "^0.41.1",
     "better-trpc-openapi": "^0.1.0",
     "body-parser": "^1.20.2",
