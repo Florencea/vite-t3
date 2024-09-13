@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { type Handler } from "express";
 import helmet from "helmet";
-import i18nMiddleware from "i18next-http-middleware";
+import { handle, LanguageDetector } from "i18next-http-middleware";
 import { cwd } from "node:process";
 import { serve, setup } from "swagger-ui-express";
 import ViteExpress from "vite-express";
@@ -69,8 +69,8 @@ if (IS_PRODCTION) {
  * i18n
  */
 if (ENABLE_SERVER) {
-  void i18n.use(i18nMiddleware.LanguageDetector).init(i18n.options);
-  app.use(i18nMiddleware.handle(i18n));
+  void i18n.use(LanguageDetector).init(i18n.options);
+  app.use(handle(i18n));
 }
 
 const middlewareConfig = {

@@ -50,7 +50,7 @@ declare module "@tanstack/react-router" {
 }
 
 export const useSiteTitle = () => {
-  const {t} = useTranslation("routes");
+  const { t } = useTranslation("routes");
   const {
     location: { pathname },
   } = useRouterState();
@@ -60,7 +60,6 @@ export const useSiteTitle = () => {
   );
 
   return currentLabel
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    ? `${t(currentLabel.key, {defaultValue: currentLabel.label})} - ${import.meta.env.VITE_TITLE}`
+    ? `${t(currentLabel.key, { defaultValue: currentLabel.label })} - ${import.meta.env.VITE_TITLE}`
     : import.meta.env.VITE_TITLE;
 };
