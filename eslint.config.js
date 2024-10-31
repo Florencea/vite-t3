@@ -25,11 +25,8 @@ export default tseslint.config(
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
-        project: ["tsconfig.json", "tsconfig.node.json"],
+        projectService: true,
         tsconfigRootDir: import.meta.dirname,
-        ecmaFeatures: {
-          jsx: true,
-        },
       },
       globals: globals.browser,
     },
@@ -43,11 +40,6 @@ export default tseslint.config(
         "error",
         { allowConstantExport: true },
       ],
-    },
-    settings: {
-      react: {
-        version: "detect",
-      },
     },
   },
   /**

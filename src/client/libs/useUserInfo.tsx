@@ -3,6 +3,7 @@ import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { LOGIN_ROUTE, MENU_ITEMS } from "../constants/routes";
+import type { FileRouteTypes } from "../routeTree.gen";
 import { trpc } from "../trpc";
 
 export const useUserInfo = () => {
@@ -15,10 +16,7 @@ export const useUserInfo = () => {
   const menuItems = useMemo(() => {
     return MENU_ITEMS.filter(({ icon }) => Boolean(icon)).map((item) => ({
       ...item,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      label: `${t(item.key)}`,
+      label: `${t(item.key as FileRouteTypes["fullPaths"])}`,
     }));
   }, [t]);
 

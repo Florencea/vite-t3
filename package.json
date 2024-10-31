@@ -7,7 +7,7 @@
     "build": "npm run lint && vite build",
     "dev": "nodemon src/server/app.ts",
     "format": "prettier \"**/*\" --write --ignore-unknown",
-    "lint": "eslint . && tsc",
+    "lint": "eslint . && tsc -b",
     "migrate": "prisma migrate dev --name init",
     "start": "NODE_ENV=production node dist/server/app.js"
   },
