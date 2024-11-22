@@ -28,7 +28,7 @@
     "helmet": "^8.0.0",
     "i18next": "^23.16.8",
     "i18next-browser-languagedetector": "^8.0.0",
-    "i18next-http-middleware": "^3.6.0",
+    "i18next-http-middleware": "^3.7.0",
     "iron-session": "^8.0.4",
     "quicktype-core": "^23.0.170",
     "react-i18next": "^15.1.1",
