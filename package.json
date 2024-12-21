@@ -17,7 +17,7 @@
     "argon2": "^0.41.1",
     "better-trpc-openapi": "^0.1.0",
     "body-parser": "^1.20.3",
-    "chalk": "^5.4.0",
+    "chalk": "^5.4.1",
     "clsx": "^2.1.1",
     "compression": "^1.7.5",
     "cookie-parser": "^1.4.7",
