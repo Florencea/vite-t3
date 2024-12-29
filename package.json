@@ -39,6 +39,7 @@
   "devDependencies": {
     "@ant-design/cssinjs": "^1.22.1",
     "@ant-design/icons": "^5.5.2",
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@eslint/js": "^9.17.0",
     "@tanstack/react-query": "^5.62.11",
     "@tanstack/react-router": "^1.92.9",
@@ -51,8 +52,8 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.2",
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
     "@types/swagger-ui-express": "^4.1.7",
     "@vitejs/plugin-react": "^4.3.4",
     "antd": "^5.22.7",
@@ -67,8 +68,8 @@
     "prettier-plugin-packagejson": "^2.5.6",
     "prettier-plugin-tailwindcss": "^0.6.9",
     "prisma": "^6.1.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-head": "^3.4.2",
     "rollup": "^4.29.1",
     "rollup-plugin-esbuild": "^6.1.1",
@@ -79,10 +80,10 @@
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.6"
   },
-  "prisma": {
-    "seed": "tsx src/server/database/seed.ts"
-  },
   "engines": {
     "node": "22.12.0"
+  },
+  "prisma": {
+    "seed": "tsx src/server/database/seed.ts"
   }
 }
