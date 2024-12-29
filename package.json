@@ -81,5 +81,8 @@
   },
   "prisma": {
     "seed": "tsx src/server/database/seed.ts"
+  },
+  "engines": {
+    "node": "22.12.0"
   }
 }
