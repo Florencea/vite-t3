@@ -31,7 +31,7 @@
     "i18next-http-middleware": "^3.7.1",
     "iron-session": "^8.0.4",
     "quicktype-core": "^23.0.170",
-    "react-i18next": "^15.3.0",
+    "react-i18next": "^15.4.0",
     "swagger-ui-express": "^5.0.1",
     "vite-express": "^0.20.0",
     "zod": "^3.24.1"
