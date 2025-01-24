@@ -12,6 +12,7 @@ const PRIMARY_COLOR = getComputedStyle(
  */
 export const theme: ThemeConfig = {
   cssVar: true,
+  hashed: false,
   token: {
     colorPrimary: PRIMARY_COLOR,
     colorInfo: PRIMARY_COLOR,

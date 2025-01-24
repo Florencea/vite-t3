@@ -54,16 +54,16 @@ export const Providers = ({ container, children }: ProviderProps) => {
 const AntdProvider = ({ container, children }: ProviderProps) => {
   const { i18n } = useTranslation();
   return (
-    <ConfigProvider
-      getPopupContainer={() => container}
-      locale={antdLocales[i18n.language]}
-      theme={theme}
-      button={{ autoInsertSpace: false }}
-    >
-      <App>
-        <StyleProvider layer>{children}</StyleProvider>
-      </App>
-    </ConfigProvider>
+    <StyleProvider layer>
+      <ConfigProvider
+        getPopupContainer={() => container}
+        locale={antdLocales[i18n.language]}
+        theme={theme}
+        button={{ autoInsertSpace: false }}
+      >
+        <App>{children}</App>
+      </ConfigProvider>
+    </StyleProvider>
   );
 };
 
