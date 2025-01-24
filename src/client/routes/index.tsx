@@ -11,11 +11,13 @@ function Page() {
     <div className="flex h-full w-full items-center justify-center">
       <Empty
         image={logo}
-        imageStyle={{
-          filter: "grayscale(1)",
-          opacity: 0.3,
-          userSelect: "none",
-          pointerEvents: "none",
+        styles={{
+          image: {
+            filter: "grayscale(1)",
+            opacity: 0.3,
+            userSelect: "none",
+            pointerEvents: "none",
+          },
         }}
         description={false}
       />

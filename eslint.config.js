@@ -43,15 +43,6 @@ export default tseslint.config(
     },
   },
   /**
-   * enable node api for tailwind.config.js
-   */
-  {
-    files: ["tailwind.config.js"],
-    languageOptions: {
-      globals: globals.node,
-    },
-  },
-  /**
    * ignore files
    */
   {

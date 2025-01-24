@@ -30,7 +30,7 @@ export const Layout = () => {
   return (
     <>
       <Title>{title}</Title>
-      <AntdLayout className="max-w-svw h-svh">
+      <AntdLayout className="h-svh max-w-svw">
         {isLogin && (
           <Header
             style={{ background: token.colorBgContainer }}

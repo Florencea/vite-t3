@@ -1,6 +1,6 @@
 import "@ant-design/v5-patch-for-react-19";
 import "dayjs/locale/zh-tw";
-import "tailwindcss/tailwind.css";
+import "./global.css";
 
 import { StyleProvider } from "@ant-design/cssinjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -60,9 +60,9 @@ const AntdProvider = ({ container, children }: ProviderProps) => {
       theme={theme}
       button={{ autoInsertSpace: false }}
     >
-      <StyleProvider hashPriority="high">
-        <App>{children}</App>
-      </StyleProvider>
+      <App>
+        <StyleProvider layer>{children}</StyleProvider>
+      </App>
     </ConfigProvider>
   );
 };

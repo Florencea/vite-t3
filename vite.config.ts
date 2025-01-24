@@ -1,3 +1,4 @@
+import tailwindcss from "@tailwindcss/vite";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { cp, rm } from "node:fs/promises";
@@ -104,6 +105,7 @@ export default defineConfig({
       autoCodeSplitting: true,
     }),
     react(),
+    tailwindcss(),
     ClearOutdir(),
     enableServer ? ServerBuilder() : undefined,
     enableClient ? undefined : RemoveClientAssets(),
