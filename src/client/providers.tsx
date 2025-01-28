@@ -2,7 +2,6 @@ import "@ant-design/v5-patch-for-react-19";
 import "dayjs/locale/zh-tw";
 import "./global.css";
 
-import { StyleProvider } from "@ant-design/cssinjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { TRPCClientError, httpLink } from "@trpc/client";
 import { App, ConfigProvider, message } from "antd";
@@ -54,16 +53,14 @@ export const Providers = ({ container, children }: ProviderProps) => {
 const AntdProvider = ({ container, children }: ProviderProps) => {
   const { i18n } = useTranslation();
   return (
-    <StyleProvider layer>
-      <ConfigProvider
-        getPopupContainer={() => container}
-        locale={antdLocales[i18n.language]}
-        theme={theme}
-        button={{ autoInsertSpace: false }}
-      >
-        <App>{children}</App>
-      </ConfigProvider>
-    </StyleProvider>
+    <ConfigProvider
+      getPopupContainer={() => container}
+      locale={antdLocales[i18n.language]}
+      theme={theme}
+      button={{ autoInsertSpace: false }}
+    >
+      <App>{children}</App>
+    </ConfigProvider>
   );
 };
 
