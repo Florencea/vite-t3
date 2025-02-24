@@ -1,9 +1,5 @@
 import { TeamOutlined } from "@ant-design/icons";
-import {
-  createRouter,
-  useRouterState,
-  type RoutePaths,
-} from "@tanstack/react-router";
+import { createRouter, useRouterState } from "@tanstack/react-router";
 import type { inferReactQueryProcedureOptions } from "@trpc/react-query";
 import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import type { MenuProps } from "antd";
@@ -12,8 +8,6 @@ import type { AppRouter } from "../../server/router";
 import { routeTree } from "../routeTree.gen";
 
 export const LOGIN_ROUTE = "/login";
-
-export type RoutePath = RoutePaths<typeof routeTree>;
 
 export type ReactQueryOptions = inferReactQueryProcedureOptions<AppRouter>;
 export type RouterInputs = inferRouterInputs<AppRouter>;
