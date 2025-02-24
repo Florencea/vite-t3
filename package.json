@@ -43,7 +43,7 @@
     "@tailwindcss/vite": "^4.0.8",
     "@tanstack/react-query": "^5.66.9",
     "@tanstack/react-router": "^1.111.3",
-    "@tanstack/router-plugin": "^1.109.2",
+    "@tanstack/router-plugin": "^1.111.3",
     "@trpc/client": "^11.0.0-rc.802",
     "@trpc/react-query": "^11.0.0-rc.802",
     "@types/body-parser": "^1.19.5",
