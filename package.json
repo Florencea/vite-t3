@@ -59,7 +59,7 @@
     "antd": "^5.24.2",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.21.0",
-    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "nodemon": "^3.1.9",
