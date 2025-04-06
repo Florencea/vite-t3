@@ -42,7 +42,7 @@
     "@eslint/js": "^9.24.0",
     "@tailwindcss/vite": "^4.1.3",
     "@tanstack/react-query": "^5.71.10",
-    "@tanstack/react-router": "^1.114.34",
+    "@tanstack/react-router": "^1.115.0",
     "@tanstack/router-plugin": "^1.114.34",
     "@trpc/client": "^11.0.2",
     "@trpc/react-query": "^11.0.2",
