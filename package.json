@@ -65,7 +65,7 @@
     "nodemon": "^3.1.10",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
-    "prettier-plugin-packagejson": "^2.5.11",
+    "prettier-plugin-packagejson": "^2.5.12",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "prisma": "^6.7.0",
     "react": "^19.1.0",
