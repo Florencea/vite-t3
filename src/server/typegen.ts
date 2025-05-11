@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   InputData,
   jsonInputForTargetLanguage,
+  type LanguageName,
   type Options,
   quicktype,
 } from "quicktype-core";
@@ -19,7 +20,7 @@ const TYPEGEN_CONFIG: Record<string, Partial<Options>> = {
     rendererOptions: { "just-types": "true", package: "com.example" },
   },
   csharp: {
-    lang: "C#",
+    lang: "csharp",
     rendererOptions: { features: "just-types", namespace: "Example" },
   },
 };
@@ -28,7 +29,7 @@ typegenController.post("/:lang", (req, res, next) => {
   const handler = async () => {
     try {
       const { lang } = req.params;
-      const jsonInput = jsonInputForTargetLanguage(lang);
+      const jsonInput = jsonInputForTargetLanguage(lang as LanguageName);
       await jsonInput.addSource({
         name: "Example",
         samples: [JSON.stringify(req.body)],
