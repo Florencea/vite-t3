@@ -48,7 +48,7 @@
     "@trpc/react-query": "^11.3.1",
     "@types/body-parser": "^1.19.6",
     "@types/compression": "^1.8.1",
-    "@types/cookie-parser": "^1.4.8",
+    "@types/cookie-parser": "^1.4.9",
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.2",
     "@types/node": "^22.15.30",
