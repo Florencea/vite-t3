@@ -1,10 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { Button, Card, Form, Input } from "antd";
 import { useTranslation } from "react-i18next";
 import { I18nSwitcher } from "../components/i18n-switcher";
 import { useAuth } from "../libs/useAuth";
 
-export const Route = createFileRoute("/login")({
+export const Route = createFileRoute({
   component: Page,
 });
 

@@ -1,15 +1,29 @@
 import js from "@eslint/js";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import { globalIgnores } from "eslint/config";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config(
-  /**
-   * base and typescript
-   */
-  js.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
+export default tseslint.config([
+  globalIgnores(["dist", "public", "src/server/openapi"]),
+  {
+    files: ["**/*.{ts,tsx}"],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.recommendedTypeChecked,
+      reactHooks.configs["recommended-latest"],
+      reactRefresh.configs.vite,
+    ],
+    languageOptions: {
+      globals: globals.browser,
+      parser: tseslint.parser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
+  },
   /**
    *  ignore type check for .js
    */
@@ -17,35 +31,4 @@ export default tseslint.config(
     files: ["*.js"],
     ...tseslint.configs.disableTypeChecked,
   },
-  /**
-   * react
-   */
-  {
-    files: ["**/*.{ts,tsx}"],
-    languageOptions: {
-      parser: tseslint.parser,
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-      globals: globals.browser,
-    },
-    plugins: {
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
-    },
-    rules: {
-      ...reactHooks.configs.recommended.rules,
-      "react-refresh/only-export-components": [
-        "error",
-        { allowConstantExport: true },
-      ],
-    },
-  },
-  /**
-   * ignore files
-   */
-  {
-    ignores: ["dist", "public", "src/server/openapi"],
-  },
-);
+]);

@@ -8,82 +8,45 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import type { CreateFileRoute, FileRoutesByPath } from "@tanstack/react-router";
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as UserImport } from "./routes/user";
-import { Route as LoginImport } from "./routes/login";
-import { Route as IndexImport } from "./routes/index";
+import { Route as rootRouteImport } from "./routes/__root";
+import { Route as UserRouteImport } from "./routes/user";
+import { Route as LoginRouteImport } from "./routes/login";
+import { Route as IndexRouteImport } from "./routes/index";
 
-// Create/Update Routes
-
-const UserRoute = UserImport.update({
+const UserRoute = UserRouteImport.update({
   id: "/user",
   path: "/user",
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any);
-
-const LoginRoute = LoginImport.update({
+const LoginRoute = LoginRouteImport.update({
   id: "/login",
   path: "/login",
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any);
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: "/",
   path: "/",
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any);
-
-// Populate the FileRoutesByPath interface
-
-declare module "@tanstack/react-router" {
-  interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/login": {
-      id: "/login";
-      path: "/login";
-      fullPath: "/login";
-      preLoaderRoute: typeof LoginImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/user": {
-      id: "/user";
-      path: "/user";
-      fullPath: "/user";
-      preLoaderRoute: typeof UserImport;
-      parentRoute: typeof rootRoute;
-    };
-  }
-}
-
-// Create and export the route tree
 
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute;
   "/login": typeof LoginRoute;
   "/user": typeof UserRoute;
 }
-
 export interface FileRoutesByTo {
   "/": typeof IndexRoute;
   "/login": typeof LoginRoute;
   "/user": typeof UserRoute;
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute;
+  __root__: typeof rootRouteImport;
   "/": typeof IndexRoute;
   "/login": typeof LoginRoute;
   "/user": typeof UserRoute;
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
   fullPaths: "/" | "/login" | "/user";
@@ -92,11 +55,64 @@ export interface FileRouteTypes {
   id: "__root__" | "/" | "/login" | "/user";
   fileRoutesById: FileRoutesById;
 }
-
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute;
   LoginRoute: typeof LoginRoute;
   UserRoute: typeof UserRoute;
+}
+
+declare module "@tanstack/react-router" {
+  interface FileRoutesByPath {
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/login": {
+      id: "/login";
+      path: "/login";
+      fullPath: "/login";
+      preLoaderRoute: typeof LoginRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+    "/user": {
+      id: "/user";
+      path: "/user";
+      fullPath: "/user";
+      preLoaderRoute: typeof UserRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
+  }
+}
+
+declare module "./routes/index" {
+  const createFileRoute: CreateFileRoute<
+    "/",
+    FileRoutesByPath["/"]["parentRoute"],
+    FileRoutesByPath["/"]["id"],
+    FileRoutesByPath["/"]["path"],
+    FileRoutesByPath["/"]["fullPath"]
+  >;
+}
+declare module "./routes/login" {
+  const createFileRoute: CreateFileRoute<
+    "/login",
+    FileRoutesByPath["/login"]["parentRoute"],
+    FileRoutesByPath["/login"]["id"],
+    FileRoutesByPath["/login"]["path"],
+    FileRoutesByPath["/login"]["fullPath"]
+  >;
+}
+declare module "./routes/user" {
+  const createFileRoute: CreateFileRoute<
+    "/user",
+    FileRoutesByPath["/user"]["parentRoute"],
+    FileRoutesByPath["/user"]["id"],
+    FileRoutesByPath["/user"]["path"],
+    FileRoutesByPath["/user"]["fullPath"]
+  >;
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -104,31 +120,6 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   UserRoute: UserRoute,
 };
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>();
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/login",
-        "/user"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/login": {
-      "filePath": "login.tsx"
-    },
-    "/user": {
-      "filePath": "user.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

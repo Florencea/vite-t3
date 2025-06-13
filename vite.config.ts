@@ -1,5 +1,5 @@
 import tailwindcss from "@tailwindcss/vite";
-import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { cp, rm } from "node:fs/promises";
 import { join } from "node:path";
@@ -96,13 +96,16 @@ export default defineConfig({
     reportCompressedSize: false,
   },
   plugins: [
-    TanStackRouterVite({
+    tanstackRouter({
+      target: "react",
+      autoCodeSplitting: true,
+      verboseFileRoutes: false,
       routesDirectory: "./src/client/routes",
       generatedRouteTree: "./src/client/routeTree.gen.ts",
       quoteStyle: "double",
       semicolons: true,
       disableLogging: true,
-      autoCodeSplitting: true,
+      tmpDir: "node_modules/.tmp",
     }),
     react(),
     tailwindcss(),
