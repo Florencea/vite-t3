@@ -44,7 +44,7 @@
     "@tanstack/react-query": "^5.81.5",
     "@tanstack/react-router": "^1.121.41",
     "@tanstack/router-plugin": "^1.121.41",
-    "@trpc/client": "^11.4.2",
+    "@trpc/client": "^11.4.3",
     "@trpc/react-query": "^11.4.2",
     "@types/body-parser": "^1.19.6",
     "@types/compression": "^1.8.1",
