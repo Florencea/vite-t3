@@ -16,8 +16,8 @@ export default tseslint.config([
       reactRefresh.configs.vite,
     ],
     languageOptions: {
+      ecmaVersion: 2022,
       globals: globals.browser,
-      parser: tseslint.parser,
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
