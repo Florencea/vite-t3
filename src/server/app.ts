@@ -1,14 +1,14 @@
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { createOpenApiExpressMiddleware } from "better-trpc-openapi";
 import bodyParser from "body-parser";
 import compression from "compression";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import express, { type Handler } from "express";
+import express from "express";
 import helmet from "helmet";
 import { handle, LanguageDetector } from "i18next-http-middleware";
 import { cwd } from "node:process";
 import { serve, setup } from "swagger-ui-express";
+import { createOpenApiExpressMiddleware } from "trpc-to-openapi";
 import ViteExpress from "vite-express";
 import i18n from "../i18n";
 import {
@@ -90,7 +90,7 @@ if (ENABLE_SERVER) {
 if (ENABLE_OPENAPI) {
   app.use(
     API_ENDPOINT_RESTFUL,
-    createOpenApiExpressMiddleware(middlewareConfig) as Handler,
+    createOpenApiExpressMiddleware(middlewareConfig),
   );
 }
 

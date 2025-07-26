@@ -1,5 +1,6 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import { verify } from "argon2";
+import type { OpenApiMeta } from "trpc-to-openapi";
 import { z } from "zod";
 import type { Context } from "../context.js";
 import { prisma } from "../database/index.js";
@@ -91,8 +92,12 @@ const getUserInfo = publicProcedure
     };
   });
 
-export const auth = initTRPC.context<Context>().create().router({
-  login,
-  logout,
-  getUserInfo,
-});
+export const auth = initTRPC
+  .context<Context>()
+  .meta<OpenApiMeta>()
+  .create()
+  .router({
+    login,
+    logout,
+    getUserInfo,
+  });

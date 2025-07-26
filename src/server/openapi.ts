@@ -1,4 +1,4 @@
-import { generateOpenApiDocument } from "better-trpc-openapi";
+import { generateOpenApiDocument } from "trpc-to-openapi";
 import {
   API_ENDPOINT_RESTFUL,
   COOKIE_NAME,
