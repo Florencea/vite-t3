@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.13.0",
-    "@trpc/server": "^11.4.3",
+    "@trpc/server": "^11.4.4",
     "argon2": "^0.43.1",
     "body-parser": "^2.2.0",
     "chalk": "^5.4.1",
