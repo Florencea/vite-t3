@@ -25,7 +25,7 @@
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "helmet": "^8.1.0",
-    "i18next": "^25.3.4",
+    "i18next": "^25.3.6",
     "i18next-browser-languagedetector": "^8.2.0",
     "i18next-http-middleware": "^3.8.0",
     "iron-session": "^8.0.4",
