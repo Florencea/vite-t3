@@ -12,7 +12,7 @@
     "start": "NODE_ENV=production node dist/server/app.js"
   },
   "dependencies": {
-    "@prisma/client": "^6.16.1",
+    "@prisma/client": "^6.16.2",
     "@trpc/server": "^11.5.1",
     "argon2": "^0.44.0",
     "body-parser": "^2.2.0",
