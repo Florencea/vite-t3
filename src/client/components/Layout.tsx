@@ -39,11 +39,7 @@ export const Layout = () => {
             })}
           >
             <Link className="flex items-center gap-3" to="/">
-              <img
-                className="h-[24px] w-[24px] shrink-0"
-                src={logo}
-                alt="logo"
-              />
+              <img className="h-6 w-6 shrink-0" src={logo} alt="logo" />
               <Text
                 strong
                 className="shrink-0 text-sm tracking-wide sm:text-base"
