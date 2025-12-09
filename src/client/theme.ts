@@ -11,7 +11,6 @@ const PRIMARY_COLOR = getComputedStyle(
  * 全域 antd 主題
  */
 export const theme: ThemeConfig = {
-  cssVar: true,
   hashed: false,
   token: {
     colorPrimary: PRIMARY_COLOR,

@@ -1,4 +1,3 @@
-import "@ant-design/v5-patch-for-react-19";
 import "dayjs/locale/zh-tw";
 import "./global.css";
 
