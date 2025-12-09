@@ -1,16 +1,17 @@
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { LOGIN_ROUTE, MENU_ITEMS } from "../constants/routes";
 import type { FileRouteTypes } from "../routeTree.gen";
-import { trpc } from "../trpc";
+import { useTRPC } from "../trpc";
 
 export const useUserInfo = () => {
+  const trpc = useTRPC();
   const { t } = useTranslation("routes");
   const navigate = useNavigate();
   const routerState = useRouterState();
-  const userInfo = trpc.auth.getUserInfo.useQuery();
+  const userInfo = useQuery(trpc.auth.getUserInfo.queryOptions());
   const queryClient = useQueryClient();
 
   const menuItems = useMemo(() => {

@@ -63,11 +63,11 @@ export interface RootRouteChildren {
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexRouteImport;
+    "/user": {
+      id: "/user";
+      path: "/user";
+      fullPath: "/user";
+      preLoaderRoute: typeof UserRouteImport;
       parentRoute: typeof rootRouteImport;
     };
     "/login": {
@@ -77,11 +77,11 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LoginRouteImport;
       parentRoute: typeof rootRouteImport;
     };
-    "/user": {
-      id: "/user";
-      path: "/user";
-      fullPath: "/user";
-      preLoaderRoute: typeof UserRouteImport;
+    "/": {
+      id: "/";
+      path: "/";
+      fullPath: "/";
+      preLoaderRoute: typeof IndexRouteImport;
       parentRoute: typeof rootRouteImport;
     };
   }

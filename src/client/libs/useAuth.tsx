@@ -1,21 +1,27 @@
+import { useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import type { RouterInputs } from "../constants/routes";
-import { trpc } from "../trpc";
+import { useTRPC } from "../trpc";
 import { useAntdForm } from "./useAntdForm";
 
 export const useAuth = () => {
+  const trpc = useTRPC();
   const { t } = useTranslation("login");
 
-  const login = trpc.auth.login.useMutation({
-    onSuccess: () => {
-      window.location.reload();
-    },
-  });
-  const logout = trpc.auth.logout.useMutation({
-    onSuccess: () => {
-      window.location.reload();
-    },
-  });
+  const login = useMutation(
+    trpc.auth.login.mutationOptions({
+      onSuccess: () => {
+        window.location.reload();
+      },
+    }),
+  );
+  const logout = useMutation(
+    trpc.auth.logout.mutationOptions({
+      onSuccess: () => {
+        window.location.reload();
+      },
+    }),
+  );
 
   const loginForm = useAntdForm<RouterInputs["auth"]["login"]>({
     formProps: {
