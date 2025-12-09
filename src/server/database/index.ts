@@ -11,26 +11,22 @@ const prismaClientSingleton = () => {
   return new PrismaClient({ adapter }).$extends({
     name: "user-create",
     query: {
-      $allModels: {
-        create: async ({ model, args, query }) => {
-          if (model === "User") {
-            const password = await argon2.hash(args.data.password);
-            args.data = { ...args.data, password };
-          }
+      user: {
+        create: async ({ args, query }) => {
+          const password = await argon2.hash(args.data.password);
+          args.data = { ...args.data, password };
           return query(args);
         },
-        upsert: async ({ model, args, query }) => {
-          if (model === "User") {
-            const password = await argon2.hash(args.create.password);
-            args.create = {
-              ...args.create,
-              password,
-            };
-            args.update = {
-              ...args.update,
-              password,
-            };
-          }
+        upsert: async ({ args, query }) => {
+          const password = await argon2.hash(args.create.password);
+          args.create = {
+            ...args.create,
+            password,
+          };
+          args.update = {
+            ...args.update,
+            password,
+          };
           return query(args);
         },
       },
