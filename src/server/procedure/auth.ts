@@ -88,7 +88,10 @@ const getUserInfo = publicProcedure
   .query((opts) => {
     return {
       success: !!opts.ctx.session.id,
-      account: opts.ctx.session.account ?? null,
+      account:
+        typeof opts.ctx.session.account === "string"
+          ? opts.ctx.session.account
+          : null,
     };
   });
 

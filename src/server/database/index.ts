@@ -1,10 +1,41 @@
-import { PrismaClient } from "@prisma/client";
-import { softDeleteExtension, userCreateExtension } from "./extensions.js";
+import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import argon2 from "argon2";
+import "dotenv/config";
+import { PrismaClient } from "../../../prisma/generated/client";
+
+const connectionString = `${process.env.DATABASE_URL}`;
+
+const adapter = new PrismaBetterSqlite3({ url: connectionString });
 
 const prismaClientSingleton = () => {
-  return new PrismaClient({ errorFormat: "minimal" })
-    .$extends(softDeleteExtension())
-    .$extends(userCreateExtension());
+  return new PrismaClient({ adapter }).$extends({
+    name: "user-create",
+    query: {
+      $allModels: {
+        create: async ({ model, args, query }) => {
+          if (model === "User") {
+            const password = await argon2.hash(args.data.password);
+            args.data = { ...args.data, password };
+          }
+          return query(args);
+        },
+        upsert: async ({ model, args, query }) => {
+          if (model === "User") {
+            const password = await argon2.hash(args.create.password);
+            args.create = {
+              ...args.create,
+              password,
+            };
+            args.update = {
+              ...args.update,
+              password,
+            };
+          }
+          return query(args);
+        },
+      },
+    },
+  });
 };
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;

@@ -6,7 +6,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig(
-  globalIgnores(["dist", "public", "src/server/openapi"]),
+  globalIgnores(["dist", "public", "src/server/openapi", "prisma/generated"]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [
