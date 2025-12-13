@@ -45,7 +45,7 @@
     "@tanstack/react-query": "^5.90.12",
     "@tanstack/react-router": "^1.141.2",
     "@tanstack/router-plugin": "^1.141.2",
-    "@trpc/client": "^11.7.2",
+    "@trpc/client": "^11.8.0",
     "@trpc/tanstack-react-query": "^11.7.2",
     "@types/better-sqlite3": "^7.6.13",
     "@types/body-parser": "^1.19.6",
