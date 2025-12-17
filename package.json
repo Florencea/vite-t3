@@ -13,7 +13,7 @@
     "start": "NODE_ENV=production node dist/server/app.js"
   },
   "dependencies": {
-    "@prisma/adapter-better-sqlite3": "^7.1.0",
+    "@prisma/adapter-better-sqlite3": "^7.2.0",
     "@prisma/client": "^7.1.0",
     "@trpc/server": "^11.8.0",
     "argon2": "^0.44.0",
