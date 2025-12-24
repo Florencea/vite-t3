@@ -58,7 +58,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/swagger-ui-express": "^4.1.8",
     "@vitejs/plugin-react": "^5.1.2",
-    "antd": "^6.1.1",
+    "antd": "^6.1.2",
     "autoprefixer": "^10.4.23",
     "eslint": "^9.39.2",
     "eslint-plugin-react-hooks": "^7.0.1",
