@@ -44,7 +44,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-query": "^5.90.12",
     "@tanstack/react-router": "^1.144.0",
-    "@tanstack/router-plugin": "^1.143.11",
+    "@tanstack/router-plugin": "^1.144.0",
     "@trpc/client": "^11.8.1",
     "@trpc/tanstack-react-query": "^11.8.1",
     "@types/better-sqlite3": "^7.6.13",
