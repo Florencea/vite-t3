@@ -70,7 +70,7 @@
     "prettier-plugin-packagejson": "^2.5.22",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "prisma": "^7.3.0",
-    "react": "^19.2.3",
+    "react": "^19.2.4",
     "react-dom": "^19.2.3",
     "react-head": "^3.4.2",
     "rollup": "^4.56.0",
