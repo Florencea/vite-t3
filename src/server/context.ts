@@ -1,6 +1,6 @@
-import type { User } from "@prisma/client";
 import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
 import { getIronSession } from "iron-session";
+import type { User } from "../../prisma/generated/client.js";
 import { COOKIE_NAME, COOKIE_SECRET } from "./config.js";
 
 export async function createContext({ req, res }: CreateExpressContextOptions) {

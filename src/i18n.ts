@@ -15,6 +15,7 @@ export const config = {
   interpolation: {
     escapeValue: false,
   },
+  showSupportNotice: false,
 };
 
 void i18n.use(LanguageDetector).use(initReactI18next).init(config);
