@@ -83,7 +83,7 @@
     "vite": "^7.3.1"
   },
   "engines": {
-    "node": "24.13.0"
+    "node": "24.13.1"
   },
   "prisma": {
     "seed": "tsx src/server/database/seed.ts"
