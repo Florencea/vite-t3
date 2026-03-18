@@ -36,7 +36,7 @@ body {
 }
 
 .swagger-ui .copy-typescript-btn-default {
-  background-color: var(--theme-typescript-color);
+  background-color: var(--theme-typescript-color) !important;
   top: 10px;
   right: 50px;
   transition:
@@ -46,7 +46,7 @@ body {
 }
 
 .swagger-ui .copy-java-btn-default {
-  background-color: var(--theme-java-color);
+  background-color: var(--theme-java-color) !important;
   top: 10px;
   right: 90px;
   transition:
@@ -56,7 +56,7 @@ body {
 }
 
 .swagger-ui .copy-csharp-btn-default {
-  background-color: var(--theme-csharp-color);
+  background-color: var(--theme-csharp-color) !important;
   top: 10px;
   right: 130px;
   transition:
@@ -75,11 +75,11 @@ body {
 
 .swagger-ui .copy-btn-success {
   transform: scale(0.8);
-  background-color: var(--swagger-btn-success-color);
+  background-color: var(--swagger-btn-success-color) !important;
 }
 
 .swagger-ui .copy-btn-fail {
-  background-color: var(--swagger-btn-fail-color);
+  background-color: var(--swagger-btn-fail-color) !important;
 }
 
 .swagger-ui .topbar {

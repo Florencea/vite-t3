@@ -1,3 +1,7 @@
+:root {
+  color-scheme: light dark;
+}
+
 .swagger-ui .auth-wrapper .authorize,
 .swagger-ui .authorization__btn > svg {
   display: none;
@@ -12,4 +16,5 @@
   font-size: 14px;
   opacity: 0.5;
   content: "Protected Route";
+  color: light-dark(#000, #fff)
 }
