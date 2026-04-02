@@ -66,7 +66,7 @@ importers:
         specifier: ^23.2.6
         version: 23.2.6
       react-i18next:
-        specifier: ^17.0.1
+        specifier: ^17.0.2
         version: 17.0.2(i18next@26.0.3(typescript@6.0.2))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@6.0.2)
       swagger-ui-express:
         specifier: ^5.0.1
