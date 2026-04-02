@@ -6,6 +6,7 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import { handle, LanguageDetector } from "i18next-http-middleware";
+import type { IncomingMessage, Server, ServerResponse } from "node:http";
 import { cwd } from "node:process";
 import { serve, setup } from "swagger-ui-express";
 import { createOpenApiExpressMiddleware } from "trpc-to-openapi";
@@ -32,6 +33,8 @@ import { createContext } from "./context";
 import { openapiDocs } from "./openapi";
 import { appRouter } from "./router";
 import typegenController from "./typegen";
+
+let server: Server<typeof IncomingMessage, typeof ServerResponse>;
 
 const app = express();
 
@@ -104,11 +107,21 @@ if (ENABLE_OPENAPI) {
 }
 
 if (ENABLE_CLIENT) {
-  ViteExpress.listen(app, PORT, () => {
+  server = ViteExpress.listen(app, PORT, () => {
     console.info(SERVER_READY_MESSAGE);
   });
 } else {
-  app.listen(PORT, () => {
+  server = app.listen(PORT, () => {
     console.info(SERVER_READY_MESSAGE);
   });
 }
+
+const gracefulShutdown = () => {
+  server.close(() => {
+    process.exit(0);
+  });
+};
+
+process.on("SIGINT", gracefulShutdown);
+process.on("SIGTERM", gracefulShutdown);
+process.on("SIGUSR2", gracefulShutdown);
