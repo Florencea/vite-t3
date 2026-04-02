@@ -1,3 +1,4 @@
 /public
 /dist
 src/server/openapi/assets/highlight.min.js
+pnpm*.yaml
