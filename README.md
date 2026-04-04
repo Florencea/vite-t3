@@ -157,4 +157,4 @@ ENABLE_OPENAPI=0
 
 ## License
 
-This project is licensed under the [MIT License](https://www.google.com/search?q=LICENSE).
+This project is licensed under the **MIT License**.
