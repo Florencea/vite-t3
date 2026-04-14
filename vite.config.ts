@@ -3,15 +3,17 @@ import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { cp, rm } from "node:fs/promises";
 import { join } from "node:path";
-import { cwd, exit } from "node:process";
-import { rollup } from "rollup";
-import esbuild from "rollup-plugin-esbuild";
-import { nodeExternals } from "rollup-plugin-node-externals";
-import { defineConfig, loadEnv, type PluginOption } from "vite";
+import { cwd } from "node:process";
+import {
+  defineConfig,
+  loadEnv,
+  build as viteBuild,
+  type PluginOption,
+} from "vite";
 
 const {
   VITE_WEB_BASE,
-  VITE_OUTDIR,
+  VITE_OUTDIR = "dist",
   ENABLE_CLIENT,
   ENABLE_SERVER,
   ENABLE_OPENAPI,
@@ -22,31 +24,30 @@ const enableServer = ENABLE_SERVER === "1";
 const enableOpenapi = ENABLE_OPENAPI === "1";
 
 if (!enableServer && enableOpenapi) {
-  console.error("Error: Server must be enabled when OpenAPI is enabld, exit");
-  exit(1);
+  throw new Error("Error: Server must be enabled when OpenAPI is enabled.");
 }
-
-const ClearOutdir = (): PluginOption => {
-  return {
-    name: "Clear Outdir",
-    apply: "build",
-    buildStart: async () => {
-      await rm(join(".", VITE_OUTDIR), { recursive: true, force: true });
-    },
-  };
-};
 
 const ServerBuilder = (): PluginOption => {
   return {
     name: "Server Builder",
-    writeBundle: async () => {
-      const config = await rollup({
-        input: "./src/server/app.ts",
-        plugins: [nodeExternals(), esbuild({ minify: true })],
-      });
-      await config.write({
-        dir: join(".", VITE_OUTDIR, "server"),
-        format: "module",
+    apply: "build",
+    closeBundle: async () => {
+      await viteBuild({
+        configFile: false,
+        publicDir: false,
+        build: {
+          ssr: "./src/server/app.ts",
+          outDir: join(".", VITE_OUTDIR, "server"),
+          emptyOutDir: true,
+          rolldownOptions: {
+            output: {
+              format: "es",
+            },
+          },
+        },
+        ssr: {
+          external: ["better-sqlite3", "@prisma/adapter-better-sqlite3"],
+        },
       });
     },
   };
@@ -56,7 +57,7 @@ const RemoveClientAssets = (): PluginOption => {
   return {
     name: "Remove Client Assets",
     apply: "build",
-    writeBundle: async () => {
+    closeBundle: async () => {
       const clientAssetsPath = enableServer
         ? join(".", VITE_OUTDIR, "client")
         : join(".", VITE_OUTDIR);
@@ -92,6 +93,7 @@ export default defineConfig({
   base: VITE_WEB_BASE,
   build: {
     outDir: enableServer ? join(".", VITE_OUTDIR, "client") : VITE_OUTDIR,
+    emptyOutDir: true,
     chunkSizeWarningLimit: Infinity,
     reportCompressedSize: false,
   },
@@ -108,7 +110,6 @@ export default defineConfig({
     }),
     react(),
     tailwindcss(),
-    ClearOutdir(),
     enableServer ? ServerBuilder() : undefined,
     enableClient ? undefined : RemoveClientAssets(),
     enableOpenapi ? undefined : RemoveOpenApiAssets(),
