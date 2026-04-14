@@ -8,8 +8,6 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import type { CreateFileRoute, FileRoutesByPath } from "@tanstack/react-router";
-
 import { Route as rootRouteImport } from "./routes/__root";
 import { Route as UserRouteImport } from "./routes/user";
 import { Route as LoginRouteImport } from "./routes/login";
@@ -85,34 +83,6 @@ declare module "@tanstack/react-router" {
       parentRoute: typeof rootRouteImport;
     };
   }
-}
-
-declare module "./routes/index" {
-  const createFileRoute: CreateFileRoute<
-    "/",
-    FileRoutesByPath["/"]["parentRoute"],
-    FileRoutesByPath["/"]["id"],
-    FileRoutesByPath["/"]["path"],
-    FileRoutesByPath["/"]["fullPath"]
-  >;
-}
-declare module "./routes/login" {
-  const createFileRoute: CreateFileRoute<
-    "/login",
-    FileRoutesByPath["/login"]["parentRoute"],
-    FileRoutesByPath["/login"]["id"],
-    FileRoutesByPath["/login"]["path"],
-    FileRoutesByPath["/login"]["fullPath"]
-  >;
-}
-declare module "./routes/user" {
-  const createFileRoute: CreateFileRoute<
-    "/user",
-    FileRoutesByPath["/user"]["parentRoute"],
-    FileRoutesByPath["/user"]["id"],
-    FileRoutesByPath["/user"]["path"],
-    FileRoutesByPath["/user"]["fullPath"]
-  >;
 }
 
 const rootRouteChildren: RootRouteChildren = {

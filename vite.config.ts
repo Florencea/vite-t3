@@ -99,7 +99,6 @@ export default defineConfig({
     tanstackRouter({
       target: "react",
       autoCodeSplitting: true,
-      verboseFileRoutes: false,
       routesDirectory: "./src/client/routes",
       generatedRouteTree: "./src/client/routeTree.gen.ts",
       quoteStyle: "double",

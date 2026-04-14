@@ -1,7 +1,8 @@
+import { createFileRoute } from "@tanstack/react-router";
 import { Empty } from "antd";
 import logo from "../assets/logo.png";
 
-export const Route = createFileRoute({
+export const Route = createFileRoute("/")({
   component: Page,
 });
 
