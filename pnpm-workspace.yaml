@@ -9,3 +9,6 @@ engineStrict: true
 nodeVersion: 24.14.1
 savePrefix: ''
 strictDepBuilds: true
+optimisticRepeatInstall: true 
+verifyDepsBeforeRun: install
+minimumReleaseAge: 1440

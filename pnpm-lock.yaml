@@ -89,6 +89,9 @@ importers:
       react-dom:
         specifier: 19.2.5
         version: 19.2.5(react@19.2.5)
+      react-head:
+        specifier: 3.4.2
+        version: 3.4.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       react-i18next:
         specifier: 17.0.2
         version: 17.0.2(i18next@26.0.4(typescript@6.0.2))(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@6.0.2)
@@ -174,9 +177,6 @@ importers:
       prisma:
         specifier: 7.7.0
         version: 7.7.0(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(better-sqlite3@12.9.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(typescript@6.0.2)
-      react-head:
-        specifier: 3.4.2
-        version: 3.4.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       tailwindcss:
         specifier: 4.2.2
         version: 4.2.2
