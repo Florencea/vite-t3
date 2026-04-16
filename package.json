@@ -9,7 +9,7 @@
     "format": "prettier \"**/*\" --write --ignore-unknown",
     "preinstall": "node -e \"if(!process.env.npm_config_user_agent?.startsWith('pnpm')){console.error('Error: Use pnpm to install.');process.exit(1)}\"",
     "lint": "eslint . && tsc -b",
-    "migrate": "prisma migrate dev --name init && prisma generate",
+    "migrate": "prisma migrate dev && prisma generate",
     "seed": "prisma db seed",
     "start": "NODE_ENV=production node dist/server/app.js"
   },
@@ -81,15 +81,5 @@
   "engines": {
     "node": "24.15.0",
     "pnpm": "10.33.0"
-  },
-  "devEngines": {
-    "runtime": {
-      "name": "node",
-      "onFail": "error"
-    },
-    "packageManager": {
-      "name": "pnpm",
-      "onFail": "error"
-    }
   }
 }
