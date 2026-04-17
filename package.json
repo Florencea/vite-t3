@@ -7,7 +7,6 @@
     "build": "pnpm run lint && vite build",
     "dev": "NODE_ENV=development node --watch --watch-path=src/server --watch-path=src/locales --watch-path=public/openapi --watch-path=.env --watch-path=package.json --import tsx src/server/app.ts",
     "format": "prettier \"**/*\" --write --ignore-unknown",
-    "preinstall": "node -e \"if(!process.env.npm_config_user_agent?.startsWith('pnpm')){console.error('Error: Use pnpm to install.');process.exit(1)}\"",
     "lint": "eslint . && tsc -b",
     "migrate": "prisma migrate dev && prisma generate",
     "seed": "prisma db seed",
