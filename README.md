@@ -33,8 +33,8 @@ A fullstack project inspired by the T3 stack, built with Vite, React, tRPC, Pris
 
 ### Prerequisites
 
-- **Node.js** (v18+ recommended)
-- **PNPM** (Used as the package manager)
+- **Node.js** 24.15.0
+- **PNPM** 10.33.0
 
 ### Installation & Setup
 

@@ -4,13 +4,18 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "pnpm run lint && vite build",
+    "build": "pnpm typecheck && pnpm lint && vite build",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev && prisma generate",
+    "db:push": "prisma db push",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio",
     "dev": "NODE_ENV=development node --watch --watch-path=src/server --watch-path=src/locales --watch-path=public/openapi --watch-path=.env --watch-path=package.json --import tsx src/server/app.ts",
-    "format": "prettier \"**/*\" --write --ignore-unknown",
-    "lint": "eslint . && tsc -b",
-    "migrate": "prisma migrate dev && prisma generate",
-    "seed": "prisma db seed",
-    "start": "NODE_ENV=production node dist/server/app.js"
+    "format": "prettier . --write --ignore-unknown",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "start": "NODE_ENV=production node dist/server/app.js",
+    "typecheck": "tsc -b"
   },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "7.7.0",
