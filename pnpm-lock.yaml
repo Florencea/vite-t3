@@ -30,8 +30,8 @@ importers:
         specifier: 11.16.0
         version: 11.16.0(@tanstack/react-query@5.99.0(react@19.2.5))(@trpc/client@11.16.0(@trpc/server@11.16.0(typescript@6.0.2))(typescript@6.0.2))(@trpc/server@11.16.0(typescript@6.0.2))(react@19.2.5)(typescript@6.0.2)
       antd:
-        specifier: 6.3.5
-        version: 6.3.5(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+        specifier: 6.3.6
+        version: 6.3.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       argon2:
         specifier: 0.44.0
         version: 0.44.0
@@ -799,8 +799,8 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
 
-  '@rc-component/image@1.8.1':
-    resolution: {integrity: sha512-JfPCijmMl+EaMvbftsEs/4VHmTyJKsZBh5ujFowSA45i9NTVYS1vuHtgpVV/QrGa27kXwbVOZriffCe/PNKuMw==}
+  '@rc-component/image@1.9.0':
+    resolution: {integrity: sha512-khF7w7xkBH5B1bsBcI1FSUZdkyd1aqpl2eYyILCqCzzQH3XdfehGUaZTnptyaJJfs09/R5hv9jXWyazOMFIClQ==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -1489,8 +1489,8 @@ packages:
     resolution: {integrity: sha512-HqZ5rWlFjGiV0tDm3UxxgNRqsOTniqoKZu0pIAfh7TZQMGuZK+hH0drySty0si0QXj1ieop4+SkSfPZBPPkHig==}
     engines: {node: '>=14'}
 
-  antd@6.3.5:
-    resolution: {integrity: sha512-8BPz9lpZWQm42PTx7yL4KxWAotVuqINiKcoYRcLtdd5BFmAcAZicVyFTnBJyRDlzGZFZeRW3foGu6jXYFnej6Q==}
+  antd@6.3.6:
+    resolution: {integrity: sha512-zdCYjusrTUn4gNxEg4PH8MWlfuXYbKfuGOkjgZ0Rg6DpWbIVmG/MwvsZ5yvG6z3Y6UI/gzYpaQ82iTt4KdbeaA==}
     peerDependencies:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
@@ -3791,7 +3791,7 @@ snapshots:
       react: 19.2.5
       react-dom: 19.2.5(react@19.2.5)
 
-  '@rc-component/image@1.8.1(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
+  '@rc-component/image@1.9.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)':
     dependencies:
       '@rc-component/motion': 1.3.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@rc-component/portal': 2.2.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -4500,7 +4500,7 @@ snapshots:
 
   ansis@4.2.0: {}
 
-  antd@6.3.5(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
+  antd@6.3.6(react-dom@19.2.5(react@19.2.5))(react@19.2.5):
     dependencies:
       '@ant-design/colors': 8.0.1
       '@ant-design/cssinjs': 2.1.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
@@ -4517,7 +4517,7 @@ snapshots:
       '@rc-component/drawer': 1.4.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@rc-component/dropdown': 1.0.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@rc-component/form': 1.8.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
-      '@rc-component/image': 1.8.1(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
+      '@rc-component/image': 1.9.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@rc-component/input': 1.1.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@rc-component/input-number': 1.6.2(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@rc-component/mentions': 1.6.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)

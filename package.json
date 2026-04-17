@@ -21,7 +21,7 @@
     "@trpc/client": "11.16.0",
     "@trpc/server": "11.16.0",
     "@trpc/tanstack-react-query": "11.16.0",
-    "antd": "6.3.5",
+    "antd": "6.3.6",
     "argon2": "0.44.0",
     "better-sqlite3": "12.9.0",
     "body-parser": "2.2.2",
