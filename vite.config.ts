@@ -39,6 +39,8 @@ const ServerBuilder = (): PluginOption => {
           ssr: "./src/server/app.ts",
           outDir: join(".", VITE_OUTDIR, "server"),
           emptyOutDir: true,
+          chunkSizeWarningLimit: Infinity,
+          reportCompressedSize: false,
           rolldownOptions: {
             output: {
               format: "es",
