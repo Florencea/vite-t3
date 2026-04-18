@@ -4,7 +4,7 @@ A fullstack project inspired by the T3 stack, built with Vite, React, tRPC, Pris
 
 ## Quick Start
 
-**Prerequisites:** Node.js `24.15.0` & `npm`
+The required Node.js version is specified in the `engines` field of `package.json`
 
 ```sh
 # 1. Install dependencies & initialize setup
