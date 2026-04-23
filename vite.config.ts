@@ -47,9 +47,6 @@ const ServerBuilder = (): PluginOption => {
             },
           },
         },
-        ssr: {
-          external: ["better-sqlite3", "@prisma/adapter-better-sqlite3"],
-        },
       });
     },
   };

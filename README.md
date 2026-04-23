@@ -7,8 +7,8 @@ A fullstack project inspired by the T3 stack, built with Vite, React, tRPC, Pris
 The required Node.js version is specified in the `engines` field of `package.json`
 
 ```sh
-# 1. Install dependencies & initialize setup
-npm run setup
+# 1. Install dependencies
+npm ci
 
 # 2. Environment Variables
 cp .env.example .env
@@ -35,4 +35,4 @@ npm run dev
 - `npm run start`: Start production server.
 - `npm run db:studio`: Open Prisma Studio.
 
-*Note: You can toggle frontend, backend, and OpenAPI modules by modifying `ENABLE_CLIENT`, `ENABLE_SERVER`, and `ENABLE_OPENAPI` in your `.env` file.*
+_Note: You can toggle frontend, backend, and OpenAPI modules by modifying `ENABLE_CLIENT`, `ENABLE_SERVER`, and `ENABLE_OPENAPI` in your `.env` file._

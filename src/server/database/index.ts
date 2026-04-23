@@ -1,11 +1,13 @@
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaLibSql } from "@prisma/adapter-libsql";
 import argon2 from "argon2";
 import "dotenv/config";
 import { PrismaClient } from "../../../prisma/generated/client";
 
 const connectionString = `${process.env.DATABASE_URL}`;
 
-const adapter = new PrismaBetterSqlite3({ url: connectionString });
+const adapter = new PrismaLibSql({
+  url: connectionString,
+});
 
 const prismaClientSingleton = () => {
   return new PrismaClient({ adapter }).$extends({

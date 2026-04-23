@@ -245,7 +245,7 @@ export const SWAGGER_UI_OPTIONS: SwaggerUiOptions = {
   customJs: [
     join(DOC_STATIC_ROUTE, "highlight.min.js"),
     join(DOC_STATIC_ROUTE, "custom.js"),
-  ] as unknown as string,
+  ],
   swaggerOptions: {
     docExpansion: "list",
     persistAuthorization: true,
