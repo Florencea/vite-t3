@@ -57,7 +57,7 @@
   "devDependencies": {
     "@ant-design/icons": "6.1.1",
     "@eslint/js": "10.0.1",
-    "@tailwindcss/vite": "4.2.3",
+    "@tailwindcss/vite": "4.2.4",
     "@tanstack/router-plugin": "1.167.22",
     "@types/better-sqlite3": "7.6.13",
     "@types/body-parser": "1.19.6",
