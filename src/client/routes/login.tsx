@@ -10,7 +10,7 @@ export const Route = createFileRoute("/login")({
 
 function Page() {
   const { t } = useTranslation("login");
-  const { loginForm, isLoading } = useAuth();
+  const { loginForm, login } = useAuth();
   return (
     <div className="flex h-full w-full items-center justify-center">
       <Card title={t("login")} extra={[<I18nSwitcher key="i18nswicher" />]}>
@@ -22,8 +22,8 @@ function Page() {
             <Input.Password />
           </Form.Item>
           <Button
-            loading={isLoading}
-            disabled={isLoading}
+            loading={login.isPending}
+            disabled={login.isPending}
             type="primary"
             htmlType="submit"
             block

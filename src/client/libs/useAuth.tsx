@@ -43,5 +43,5 @@ export const useAuth = () => {
     },
   });
 
-  return { loginForm, isLoading: login.isPending, logout };
+  return { loginForm, login, logout };
 };
