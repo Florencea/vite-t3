@@ -18,7 +18,6 @@ export default defineConfig(
       }),
     ],
     languageOptions: {
-      ecmaVersion: 2022,
       globals: globals.browser,
       parserOptions: {
         projectService: true,
