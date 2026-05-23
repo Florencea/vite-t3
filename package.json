@@ -47,7 +47,7 @@
     "react-head": "3.4.2",
     "react-i18next": "17.0.8",
     "swagger-ui-express": "5.0.1",
-    "trpc-to-openapi": "3.2.0",
+    "trpc-to-openapi": "3.3.0",
     "vite-express": "0.22.1",
     "zod": "4.4.3"
   },
