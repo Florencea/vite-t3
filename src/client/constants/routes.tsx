@@ -33,6 +33,10 @@ export const MENU_ITEMS = [
 export const router = createRouter({
   routeTree: routeTree,
   basepath: import.meta.env.BASE_URL,
+  context: {
+    queryClient: undefined!,
+    trpc: undefined!,
+  },
 });
 
 declare module "@tanstack/react-router" {

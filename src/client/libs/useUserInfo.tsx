@@ -1,18 +1,14 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate, useRouterState } from "@tanstack/react-router";
-import { useEffect, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { LOGIN_ROUTE, MENU_ITEMS } from "../constants/routes";
+import { MENU_ITEMS } from "../constants/routes";
 import type { FileRouteTypes } from "../routeTree.gen";
 import { useTRPC } from "../trpc";
 
 export const useUserInfo = () => {
   const trpc = useTRPC();
   const { t } = useTranslation("routes");
-  const navigate = useNavigate();
-  const routerState = useRouterState();
   const userInfo = useQuery(trpc.auth.getUserInfo.queryOptions());
-  const queryClient = useQueryClient();
 
   const menuItems = useMemo(() => {
     return MENU_ITEMS.filter(({ icon }) => Boolean(icon)).map((item) => ({
@@ -20,29 +16,6 @@ export const useUserInfo = () => {
       label: `${t(item.key as FileRouteTypes["fullPaths"])}`,
     }));
   }, [t]);
-
-  useEffect(() => {
-    if (
-      userInfo.isFetched &&
-      !userInfo.data?.success &&
-      routerState.location.pathname !== LOGIN_ROUTE
-    ) {
-      void navigate({ to: LOGIN_ROUTE, replace: true });
-    }
-    if (
-      userInfo.isFetched &&
-      userInfo.data?.success &&
-      routerState.location.pathname === LOGIN_ROUTE
-    ) {
-      void navigate({ to: "/", replace: true });
-    }
-  }, [
-    navigate,
-    queryClient,
-    routerState.location.pathname,
-    userInfo.data?.success,
-    userInfo.isFetched,
-  ]);
 
   return {
     isLogin: !!userInfo.data?.success,

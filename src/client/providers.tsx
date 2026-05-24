@@ -28,7 +28,18 @@ const antdLocales: Record<string, Locale> = {
   "zh-TW": zhTW,
 };
 
-export const Providers = ({ container, children }: ProviderProps) => {
+import { useQueryClient } from "@tanstack/react-query";
+import { RouterProvider } from "@tanstack/react-router";
+import { router } from "./constants/routes";
+import { useTRPC } from "./trpc";
+
+const AppRouterProvider = () => {
+  const queryClient = useQueryClient();
+  const trpc = useTRPC();
+  return <RouterProvider router={router} context={{ queryClient, trpc }} />;
+};
+
+export const Providers = ({ container }: { container: HTMLElement }) => {
   useEffect(() => {
     i18n.on("languageChanged", (lng) => {
       document.documentElement.setAttribute("lang", lng);
@@ -42,7 +53,9 @@ export const Providers = ({ container, children }: ProviderProps) => {
           headTags={[<title key="title">{import.meta.env.VITE_TITLE}</title>]}
         >
           <ApiProvider>
-            <AntdProvider container={container}>{children}</AntdProvider>
+            <AntdProvider container={container}>
+              <AppRouterProvider />
+            </AntdProvider>
           </ApiProvider>
         </HeadProvider>
       </I18nextProvider>
