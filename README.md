@@ -32,7 +32,8 @@ npm run dev
 
 - `npm run dev`: Start development server (`--watch` mode).
 - `npm run build`: Typecheck, lint, and build for production.
-- `npm run start`: Start production server.
+- `npm run preview`: Build and preview the production server locally (cross-platform).
+- `npm run start`: Start production server (requires built files and `NODE_ENV=production` set by host environment).
 - `npm run db:studio`: Open Prisma Studio.
 
 _Note: You can toggle frontend, backend, and OpenAPI modules by modifying `ENABLE_CLIENT`, `ENABLE_SERVER`, and `ENABLE_OPENAPI` in your `.env` file._
