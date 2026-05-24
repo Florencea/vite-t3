@@ -5,13 +5,14 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import express from "express";
 import helmet from "helmet";
+import i18next from "i18next";
 import { handle, LanguageDetector } from "i18next-http-middleware";
 import type { IncomingMessage, Server, ServerResponse } from "node:http";
 import { cwd } from "node:process";
 import { serve, setup } from "swagger-ui-express";
 import { createOpenApiExpressMiddleware } from "trpc-to-openapi";
 import ViteExpress from "vite-express";
-import i18n from "../i18n";
+import { config as i18nConfig } from "../i18n.shared";
 import {
   API_ENDPOINT_RESTFUL,
   API_ENDPOINT_TRPC,
@@ -47,7 +48,9 @@ if (IS_PRODCTION) {
  */
 if (ENABLE_SERVER) {
   app.disable("x-powered-by");
-  app.use(cors());
+  if (!ENABLE_CLIENT) {
+    app.use(cors());
+  }
   app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(compression());
@@ -75,9 +78,10 @@ if (IS_PRODCTION) {
 /**
  * i18n
  */
+const serverI18n = i18next.createInstance();
 if (ENABLE_SERVER) {
-  void i18n.use(LanguageDetector).init(i18n.options);
-  app.use(handle(i18n));
+  void serverI18n.use(LanguageDetector).init(i18nConfig);
+  app.use(handle(serverI18n));
 }
 
 const middlewareConfig = {
