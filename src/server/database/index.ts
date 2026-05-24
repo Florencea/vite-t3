@@ -20,15 +20,22 @@ const prismaClientSingleton = () => {
           return query(args);
         },
         upsert: async ({ args, query }) => {
-          const password = await argon2.hash(args.create.password);
-          args.create = {
-            ...args.create,
-            password,
-          };
-          args.update = {
-            ...args.update,
-            password,
-          };
+          if (typeof args.create.password === "string") {
+            args.create.password = await argon2.hash(args.create.password);
+          }
+          if (args.update.password) {
+            if (typeof args.update.password === "string") {
+              args.update.password = await argon2.hash(args.update.password);
+            } else if (
+              typeof args.update.password === "object" &&
+              "set" in args.update.password &&
+              typeof args.update.password.set === "string"
+            ) {
+              args.update.password.set = await argon2.hash(
+                args.update.password.set,
+              );
+            }
+          }
           return query(args);
         },
       },
