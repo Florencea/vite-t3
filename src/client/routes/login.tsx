@@ -1,10 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Button, Card, Form, Input } from "antd";
 import { useTranslation } from "react-i18next";
+import { z } from "zod";
 import { I18nSwitcher } from "../components/i18n-switcher";
 import { useAuth } from "../libs/useAuth";
 
+const loginSearchSchema = z.object({
+  redirect: z.string().optional(),
+});
+
 export const Route = createFileRoute("/login")({
+  validateSearch: (search) => loginSearchSchema.parse(search),
   component: Page,
 });
 
