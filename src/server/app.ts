@@ -38,6 +38,10 @@ let server: Server<typeof IncomingMessage, typeof ServerResponse>;
 
 const app = express();
 
+if (IS_PRODCTION) {
+  app.set("trust proxy", 1);
+}
+
 /**
  * Essential middleware
  */
