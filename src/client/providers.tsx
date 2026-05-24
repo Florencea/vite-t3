@@ -7,7 +7,7 @@ import { App, ConfigProvider, message } from "antd";
 import type { Locale } from "antd/es/locale";
 import enUS from "antd/es/locale/en_US";
 import zhTW from "antd/es/locale/zh_TW";
-import { StrictMode, useCallback, useEffect, useState } from "react";
+import { StrictMode, useCallback, useEffect, useMemo, useState } from "react";
 import { HeadProvider } from "react-head";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../i18n";
@@ -65,11 +65,45 @@ export const Providers = ({ container }: { container: HTMLElement }) => {
 
 const AntdProvider = ({ container, children }: ProviderProps) => {
   const { i18n } = useTranslation();
+  const [primaryColor, setPrimaryColor] = useState(() => {
+    if (typeof window !== "undefined") {
+      return (
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--color-primary")
+          .trim() || undefined
+      );
+    }
+    return undefined;
+  });
+
+  useEffect(() => {
+    const color = getComputedStyle(document.documentElement)
+      .getPropertyValue("--color-primary")
+      .trim();
+    if (color && color !== primaryColor) {
+      requestAnimationFrame(() => {
+        setPrimaryColor(color);
+      });
+    }
+  }, [primaryColor]);
+
+  const dynamicTheme = useMemo(
+    () => ({
+      ...theme,
+      token: {
+        ...theme.token,
+        colorPrimary: primaryColor,
+        colorInfo: primaryColor,
+      },
+    }),
+    [primaryColor],
+  );
+
   return (
     <ConfigProvider
       getPopupContainer={() => container}
       locale={antdLocales[i18n.language]}
-      theme={theme}
+      theme={dynamicTheme}
       button={{ autoInsertSpace: false }}
     >
       <App>{children}</App>

@@ -1,19 +1,8 @@
 import { type ThemeConfig } from "antd";
 
 /**
- * 主題色 (自 global.css 讀取)
- */
-const PRIMARY_COLOR = getComputedStyle(
-  document.documentElement,
-).getPropertyValue("--color-primary");
-
-/**
- * 全域 antd 主題
+ * 全域 antd 主題基礎設定
  */
 export const theme: ThemeConfig = {
   hashed: false,
-  token: {
-    colorPrimary: PRIMARY_COLOR,
-    colorInfo: PRIMARY_COLOR,
-  },
 };
