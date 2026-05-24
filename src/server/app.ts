@@ -125,9 +125,18 @@ if (ENABLE_CLIENT) {
 }
 
 const gracefulShutdown = () => {
-  server.close(() => {
+  setTimeout(() => {
     process.exit(0);
-  });
+  }, 1000).unref();
+
+  if (server) {
+    server.closeAllConnections();
+    server.close(() => {
+      process.exit(0);
+    });
+  } else {
+    process.exit(0);
+  }
 };
 
 process.on("SIGINT", gracefulShutdown);
