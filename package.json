@@ -10,11 +10,12 @@
     "db:push": "prisma db push",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio",
-    "dev": "NODE_ENV=development node --watch --watch-path=src/server --watch-path=src/locales --watch-path=public/openapi --watch-path=.env --watch-path=package.json --import tsx src/server/app.ts",
+    "dev": "node --watch --watch-path=src/server --watch-path=src/locales --watch-path=public/openapi --watch-path=.env --watch-path=package.json --import tsx src/server/app.ts",
     "format": "prettier . --write --ignore-unknown",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "start": "NODE_ENV=production node dist/server/app.js",
+    "preview": "npm run build && node scripts/preview.js",
+    "start": "node dist/server/app.js",
     "typecheck": "tsc -b"
   },
   "dependencies": {
