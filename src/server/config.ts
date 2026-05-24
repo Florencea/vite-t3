@@ -2,7 +2,7 @@ import "dotenv/config";
 
 import chalk from "chalk";
 import { readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, posix } from "node:path";
 import { cwd, exit } from "node:process";
 import type { SwaggerUiOptions } from "swagger-ui-express";
 
@@ -176,7 +176,7 @@ export const DOC_TITLE = [getEnv({ env: "VITE_TITLE" }), "OpenAPI"].join(" ");
  *
  * value: String, ex: `/openapi`
  */
-export const DOC_ROUTE = join(
+export const DOC_ROUTE = posix.join(
   BASE,
   getEnv({ env: "VITE_API_OPENAPI_DOC_ROUTE" }),
 );
@@ -188,7 +188,7 @@ export const DOC_ROUTE = join(
  *
  * value: String, ex: `/openapi/typegen`
  */
-export const DOC_TYPEGEN_ROUTE = join(DOC_ROUTE, "typegen");
+export const DOC_TYPEGEN_ROUTE = posix.join(DOC_ROUTE, "typegen");
 
 /**
  * OpenAPI static file path
@@ -197,7 +197,7 @@ export const DOC_TYPEGEN_ROUTE = join(DOC_ROUTE, "typegen");
  *
  * value: String, ex: `/openapi/assets`
  */
-export const DOC_STATIC_ROUTE = join(DOC_ROUTE, "assets");
+export const DOC_STATIC_ROUTE = posix.join(DOC_ROUTE, "assets");
 
 /**
  * OpenAPI static file path
@@ -237,14 +237,14 @@ export const DOC_DESCRIPTION = ENABLE_OPENAPI
  */
 export const SWAGGER_UI_OPTIONS: SwaggerUiOptions = {
   customCssUrl: [
-    join(DOC_STATIC_ROUTE, "theme.css"),
-    join(DOC_STATIC_ROUTE, "fonts.css"),
-    join(DOC_STATIC_ROUTE, "custom.css"),
-    join(DOC_STATIC_ROUTE, "cookie.css"),
+    posix.join(DOC_STATIC_ROUTE, "theme.css"),
+    posix.join(DOC_STATIC_ROUTE, "fonts.css"),
+    posix.join(DOC_STATIC_ROUTE, "custom.css"),
+    posix.join(DOC_STATIC_ROUTE, "cookie.css"),
   ] as unknown as string,
   customJs: [
-    join(DOC_STATIC_ROUTE, "highlight.min.js"),
-    join(DOC_STATIC_ROUTE, "custom.js"),
+    posix.join(DOC_STATIC_ROUTE, "highlight.min.js"),
+    posix.join(DOC_STATIC_ROUTE, "custom.js"),
   ],
   swaggerOptions: {
     docExpansion: "list",
