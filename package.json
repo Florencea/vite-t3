@@ -53,7 +53,7 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
-    "@ant-design/icons": "6.3.1",
+    "@ant-design/icons": "6.3.2",
     "@eslint/js": "10.0.1",
     "@tailwindcss/vite": "4.3.1",
     "@tanstack/router-plugin": "1.168.18",
