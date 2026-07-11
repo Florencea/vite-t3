@@ -42,7 +42,7 @@
     "i18next-browser-languagedetector": "8.2.1",
     "i18next-http-middleware": "3.9.7",
     "iron-session": "8.0.4",
-    "quicktype-core": "23.3.25",
+    "quicktype-core": "24.0.2",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "react-head": "3.4.2",
