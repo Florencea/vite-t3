@@ -21,7 +21,12 @@ const TYPEGEN_CONFIG: Record<string, Partial<Options>> = {
   },
   csharp: {
     lang: "csharp",
-    rendererOptions: { features: "just-types", namespace: "Example" },
+    rendererOptions: {
+      namespace: "Example",
+      features: "attributes-only",
+      "just-types": true,
+      "keep-property-name": true,
+    },
   },
 };
 
