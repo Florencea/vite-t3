@@ -15,25 +15,29 @@ const prismaClientSingleton = () => {
     query: {
       user: {
         create: async ({ args, query }) => {
-          const password = await argon2.hash(args.data.password);
+          const password = (await argon2.hash(args.data.password)) as string;
           args.data = { ...args.data, password };
           return query(args);
         },
         upsert: async ({ args, query }) => {
           if (typeof args.create.password === "string") {
-            args.create.password = await argon2.hash(args.create.password);
+            args.create.password = (await argon2.hash(
+              args.create.password,
+            )) as string;
           }
           if (args.update.password) {
             if (typeof args.update.password === "string") {
-              args.update.password = await argon2.hash(args.update.password);
+              args.update.password = (await argon2.hash(
+                args.update.password,
+              )) as string;
             } else if (
               typeof args.update.password === "object" &&
               "set" in args.update.password &&
               typeof args.update.password.set === "string"
             ) {
-              args.update.password.set = await argon2.hash(
+              args.update.password.set = (await argon2.hash(
                 args.update.password.set,
-              );
+              )) as string;
             }
           }
           return query(args);
