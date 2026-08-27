@@ -1,8 +1,12 @@
-import { type ThemeConfig } from "antd";
+import type { ThemeConfig } from "antd";
 
 /**
- * 全域 antd 主題基礎設定
+ * Global Antd base theme configuration
  */
 export const theme: ThemeConfig = {
-  hashed: false,
+  token: {
+    fontFamily:
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"',
+    borderRadius: 8,
+  },
 };

@@ -3,12 +3,11 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { MENU_ITEMS } from "../constants/routes";
 import type { FileRouteTypes } from "../routeTree.gen";
-import { useTRPC } from "../trpc";
+import { userInfoQueryOptions } from "../routes/__root";
 
 export const useUserInfo = () => {
-  const trpc = useTRPC();
   const { t } = useTranslation("routes");
-  const userInfo = useQuery(trpc.auth.getUserInfo.queryOptions());
+  const userInfo = useQuery(userInfoQueryOptions());
 
   const menuItems = useMemo(() => {
     return MENU_ITEMS.filter(({ icon }) => Boolean(icon)).map((item) => ({

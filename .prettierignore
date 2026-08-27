@@ -1,4 +1,6 @@
 /public
 /dist
-src/server/openapi/assets/highlight.min.js
+/drizzle
+/.wrangler
+node_modules
 pnpm*.yaml

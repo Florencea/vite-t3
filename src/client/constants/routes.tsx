@@ -1,30 +1,46 @@
 import { TeamOutlined } from "@ant-design/icons";
 import { createRouter, useRouterState } from "@tanstack/react-router";
-import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 import type { MenuProps } from "antd";
+import type { InferRequestType, InferResponseType } from "hono/client";
 import { useTranslation } from "react-i18next";
-import type { AppRouter } from "../../server/router";
+import { api } from "../api";
 import { routeTree } from "../routeTree.gen";
 
 export const LOGIN_ROUTE = "/login";
 
-export type RouterInputs = inferRouterInputs<AppRouter>;
-export type RouterOutputs = inferRouterOutputs<AppRouter>;
+export type LoginInput = InferRequestType<typeof api.auth.login.$post>["json"];
+export type LoginOutput = InferResponseType<typeof api.auth.login.$post>;
+export type UserInfoOutput = InferResponseType<
+  typeof api.auth.getUserInfo.$get
+>;
+
+export type RouterInputs = {
+  auth: {
+    login: LoginInput;
+  };
+};
+
+export type RouterOutputs = {
+  auth: {
+    login: LoginOutput;
+    getUserInfo: UserInfoOutput;
+  };
+};
 
 type MenuItemsT = Required<MenuProps>["items"];
 
 /**
- * Item won't appear in side menu if `icon` is `null`,
+ * Items without an icon will not appear in the sidebar menu
  */
 export const MENU_ITEMS = [
   {
-    label: "登入",
+    label: "Login",
     key: "/login",
     icon: null,
     children: [],
   },
   {
-    label: "帳號管理",
+    label: "Users",
     key: "/user",
     icon: <TeamOutlined />,
   },
@@ -35,7 +51,6 @@ export const router = createRouter({
   basepath: import.meta.env.BASE_URL,
   context: {
     queryClient: undefined!,
-    trpc: undefined!,
   },
 });
 

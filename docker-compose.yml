@@ -1,0 +1,22 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+    image: vite-t3:latest
+    container_name: vite-t3-app
+    restart: unless-stopped
+    ports:
+      - "${PORT:-3000}:3000"
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/data/database.sqlite
+    volumes:
+      - sqlite_data:/app/data
+
+volumes:
+  sqlite_data:

@@ -6,7 +6,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig(
-  globalIgnores(["dist", "public", "src/server/openapi", "drizzle"]),
+  globalIgnores(["dist", "public", "drizzle", ".wrangler", "node_modules"]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [

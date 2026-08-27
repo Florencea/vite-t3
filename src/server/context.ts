@@ -1,19 +1,11 @@
-import type { CreateExpressContextOptions } from "@trpc/server/adapters/express";
-import { getIronSession } from "iron-session";
-import type { User } from "./database/schema.js";
-import { COOKIE_NAME, COOKIE_SECRET } from "./config.js";
+import type { Context } from "hono";
+import type { SessionData } from "./auth.js";
 
-export async function createContext({ req, res }: CreateExpressContextOptions) {
-  const session = await getIronSession<Partial<Pick<User, "id" | "account">>>(
-    req,
-    res,
-    {
-      password: COOKIE_SECRET,
-      cookieName: COOKIE_NAME,
-    },
-  );
-  const t = req.t;
-  return { session, t };
+export interface AppContextVariables {
+  session?: SessionData | null;
+  language?: string;
 }
 
-export type Context = Awaited<ReturnType<typeof createContext>>;
+export type AppContext = Context<{
+  Variables: AppContextVariables;
+}>;

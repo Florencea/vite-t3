@@ -1,41 +1,124 @@
 # Vite T3
 
-A fullstack project inspired by the T3 stack, built with Vite, React, tRPC, Drizzle ORM, and Express.
+A modern full-stack web application template built with **Hono**, **Vite**, **React**, **TanStack Router/Query**, and **Drizzle ORM**.
+
+---
+
+## Features
+
+- **End-to-End Type Safety**: Full TypeScript inference across frontend and backend via Hono RPC and Zod—zero schema duplication.
+- **Full-Stack i18n**: Built-in multi-language support (English / Traditional Chinese) across UI components and backend error messages.
+- **Auto OpenAPI & Typegen**: Interactive Swagger UI with instant client code generation (TypeScript, Java, C#) from API routes.
+- **Solo-Developer Friendly**: Rapid development loop for ERP and internal tools with Vite HMR, TanStack Router/Query, and Ant Design.
+- **Flexible Zero-Lock-in Deployment**: Switch between local SQLite, Docker, or Cloudflare Workers + D1 via single `.env` settings.
+
+---
 
 ## Quick Start
 
-The required Node.js version is specified in the `engines` field of `package.json`
+### 1. Installation & Setup
 
-```sh
-# 1. Install dependencies
-npm ci
+```bash
+# Install dependencies
+npm install
 
-# 2. Environment Variables
+# Copy environment variables
 cp .env.example .env
 
-# 3. Database Migration & Seeding
+# Initialize database
 npm run db:push
 npm run db:seed
+```
 
-# 4. Start Development Server
+Default credentials: `admin` / `string` (configurable in `src/server/database/seed.ts`).
+
+### 2. Development
+
+```bash
 npm run dev
 ```
 
-## Project Structure
+- Web App: `http://localhost:3000/`
+- Swagger UI: `http://localhost:3000/openapi`
 
-- `src/client/`: Frontend (React, Vite, TailwindCSS)
-- `src/server/`: Backend (Express, tRPC, OpenAPI)
-- `src/locales/`: i18n configurations
-- `src/server/database/`: Drizzle ORM schema & database connection
+---
 
-## Core Scripts
+## Environment Variables (`.env`)
 
-- `npm run dev`: Start development server (`--watch` mode).
-- `npm run build`: Typecheck, lint, and build for production.
-- `npm run preview`: Build and preview the production server locally (cross-platform).
-- `npm run start`: Start production server (requires built files and `NODE_ENV=production` set by host environment).
-- `npm run db:push`: Push schema changes to the database using Drizzle Kit.
-- `npm run db:seed`: Seed the database with initial data.
-- `npm run db:studio`: Open Drizzle Studio.
+| Variable             | Default                  | Description                                                   |
+| :------------------- | :----------------------- | :------------------------------------------------------------ |
+| `ENABLE_CLIENT`      | `1`                      | Enable frontend SPA hosting (`1` = yes, `0` = no)             |
+| `ENABLE_SERVER`      | `1`                      | Enable backend API server (`1` = yes, `0` = no)               |
+| `ENABLE_OPENAPI`     | `1`                      | Enable OpenAPI doc and Swagger UI (`/openapi`)                |
+| `ENABLE_TYPEGEN`     | `1`                      | Enable typegen route (`/openapi/typegen`)                     |
+| `ENABLE_COMPRESSION` | `1`                      | Enable HTTP compression (`hono/compress`)                     |
+| `TRUST_PROXY`        | `1`                      | Trust reverse proxy headers                                   |
+| `DEPLOY_TARGET`      | `node`                   | Deployment target (`node` / `docker` / `cloudflare` / `auto`) |
+| `PORT`               | `3000`                   | Server listening port                                         |
+| `DATABASE_DRIVER`    | `auto`                   | Database driver (`sqlite` / `d1` / `libsql` / `auto`)         |
+| `DATABASE_URL`       | `file:./database.sqlite` | SQLite / LibSQL connection string                             |
+| `COOKIE_NAME`        | `TestViteT3`             | Session cookie name                                           |
+| `COOKIE_SECRET`      | 32+ chars secret         | Cookie encryption & signing secret                            |
+| `SESSION_TTL`        | `604800`                 | Session TTL in seconds (7 days)                               |
 
-_Note: You can toggle frontend, backend, and OpenAPI modules by modifying `ENABLE_CLIENT`, `ENABLE_SERVER`, and `ENABLE_OPENAPI` in your `.env` file._
+---
+
+## Deployment
+
+### 1. Node.js Server
+
+```bash
+npm run build
+npm start
+```
+
+### 2. Docker Container
+
+Build and run using `package.json` `engines.node` as the single source of truth:
+
+```bash
+# Start container with Docker Compose (auto-injects engines.node)
+npm run docker:up
+
+# Stop container
+npm run docker:down
+
+# Or build Docker image directly
+npm run docker:build
+```
+
+### 3. Cloudflare Workers + D1
+
+```bash
+# 1. Login and create D1 database
+npx wrangler login
+npx wrangler d1 create vite-t3-db
+
+# 2. Update database_id in wrangler.jsonc
+# 3. Build and deploy to Cloudflare Workers
+npm run deploy:cf
+```
+
+---
+
+## Scripts
+
+| Command                | Description                                                |
+| :--------------------- | :--------------------------------------------------------- |
+| `npm run dev`          | Start development server with HMR                          |
+| `npm run build`        | Typecheck, lint, and build for production                  |
+| `npm start`            | Start Node.js production server                            |
+| `npm run preview`      | Build and preview production server locally                |
+| `npm run deploy:cf`    | Build and deploy to Cloudflare Workers (`wrangler deploy`) |
+| `npm run docker:build` | Build Docker image using `engines.node` version            |
+| `npm run docker:up`    | Start Docker Compose with `engines.node` version           |
+| `npm run docker:down`  | Stop Docker Compose containers                             |
+| `npm run typecheck`    | Run TypeScript typechecking (`tsc -b`)                     |
+| `npm run lint`         | Run ESLint check                                           |
+| `npm run lint:fix`     | Run ESLint auto-fix                                        |
+| `npm run format`       | Format code with Prettier                                  |
+| `npm run db:push`      | Push schema changes to database via Drizzle Kit            |
+| `npm run db:seed`      | Seed database with initial data                            |
+| `npm run db:studio`    | Launch Drizzle Studio database UI                          |
+| `npm run db:generate`  | Generate migration files with Drizzle Kit                  |
+| `npm run db:migrate`   | Apply migrations with Drizzle Kit                          |

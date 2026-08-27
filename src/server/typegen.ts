@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Hono } from "hono";
 import {
   InputData,
   jsonInputForTargetLanguage,
@@ -7,7 +7,7 @@ import {
   quicktype,
 } from "quicktype-core";
 
-const typegenController = Router();
+export const typegenRouter = new Hono();
 
 const TYPEGEN_CONFIG: Record<string, Partial<Options>> = {
   typescript: {
@@ -30,27 +30,43 @@ const TYPEGEN_CONFIG: Record<string, Partial<Options>> = {
   },
 };
 
-typegenController.post("/:lang", (req, res, next) => {
-  const handler = async () => {
-    try {
-      const { lang } = req.params;
-      const jsonInput = jsonInputForTargetLanguage(lang as LanguageName);
-      await jsonInput.addSource({
-        name: "Example",
-        samples: [JSON.stringify(req.body)],
-      });
-      const inputData = new InputData();
-      inputData.addInput(jsonInput);
-      const result = await quicktype({
-        inputData,
-        ...TYPEGEN_CONFIG[lang],
-      });
-      res.json(result.lines);
-    } catch (err) {
-      next(err);
+typegenRouter.post("/:lang", async (c) => {
+  try {
+    const lang = c.req.param("lang");
+    if (!lang || !TYPEGEN_CONFIG[lang]) {
+      return c.json({ error: `Unsupported language: ${lang}` }, 400);
     }
-  };
-  void handler();
+
+    let bodyText = await c.req.text();
+    if (!bodyText || bodyText.trim() === "") {
+      bodyText = "{}";
+    }
+
+    let parsedBody: unknown;
+    try {
+      parsedBody = JSON.parse(bodyText);
+    } catch {
+      parsedBody = { text: bodyText };
+    }
+
+    const jsonInput = jsonInputForTargetLanguage(lang as LanguageName);
+    await jsonInput.addSource({
+      name: "Example",
+      samples: [JSON.stringify(parsedBody)],
+    });
+    const inputData = new InputData();
+    inputData.addInput(jsonInput);
+    const result = await quicktype({
+      inputData,
+      ...TYPEGEN_CONFIG[lang],
+    });
+    return c.json(result.lines);
+  } catch (err) {
+    return c.json(
+      { error: err instanceof Error ? err.message : String(err) },
+      500,
+    );
+  }
 });
 
-export default typegenController;
+export default typegenRouter;

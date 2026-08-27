@@ -4,19 +4,28 @@ import chalk from "chalk";
 import { readFileSync } from "node:fs";
 import { join, posix } from "node:path";
 import { cwd, exit } from "node:process";
-import type { SwaggerUiOptions } from "swagger-ui-express";
+
+export interface SwaggerUiCustomOptions {
+  customCssUrl: string[];
+  customJs: string[];
+  swaggerOptions: Record<string, unknown>;
+  customSiteTitle: string;
+  customfavIcon: string;
+}
 
 const getEnv = ({
   env,
   from = ".env",
   field = env,
+  defaultValue,
 }: {
   env: string;
   from?: string;
   field?: string;
+  defaultValue?: string;
 }) => {
-  const ENV = process.env[env];
-  if (!ENV) {
+  const ENV = process.env[env] ?? defaultValue;
+  if (ENV === undefined) {
     const errorMsg = chalk.red(
       `No \`${field}\` field found in \`${from}\`, exit`,
     );
@@ -31,19 +40,21 @@ const getEnvFlag = ({
   env,
   from = ".env",
   field = env,
+  defaultValue = "0",
 }: {
   env: string;
   from?: string;
   field?: string;
+  defaultValue?: string;
 }) => {
-  const ENV = getEnv({ env, from, field });
-  if (ENV === "1") {
+  const ENV = getEnv({ env, from, field, defaultValue });
+  if (ENV === "1" || ENV === "true") {
     return true;
-  } else if (ENV === "0") {
+  } else if (ENV === "0" || ENV === "false") {
     return false;
   } else {
     const errorMsg = chalk.red(
-      `Flag \`${field}\` must be \`1\` or \`0\`in \`${from}\`, exit`,
+      `Flag \`${field}\` must be \`1\` or \`0\` in \`${from}\`, exit`,
     );
     console.error(errorMsg);
     exit(1);
@@ -51,162 +62,175 @@ const getEnvFlag = ({
 };
 
 /**
- * Enable client
- *
- * from: `env.ENABLE_CLIENT`
- *
- * value: Boolean, ex: `true`
+ * Enable client SPA serving
  */
-export const ENABLE_CLIENT = getEnvFlag({ env: "ENABLE_CLIENT" });
+export const ENABLE_CLIENT = getEnvFlag({
+  env: "ENABLE_CLIENT",
+  defaultValue: "1",
+});
 
 /**
- * Enable server
- *
- * from: `env.ENABLE_SERVER`
- *
- * value: Boolean, ex: `true`
+ * Enable server API
  */
-export const ENABLE_SERVER = getEnvFlag({ env: "ENABLE_SERVER" });
+export const ENABLE_SERVER = getEnvFlag({
+  env: "ENABLE_SERVER",
+  defaultValue: "1",
+});
 
 /**
- * Enable openapi
- *
- * from: `env.ENABLE_OPENAPI`
- *
- * value: Boolean, ex: `true`
+ * Enable openapi doc & swagger ui
  */
-export const ENABLE_OPENAPI = getEnvFlag({ env: "ENABLE_OPENAPI" });
+export const ENABLE_OPENAPI = getEnvFlag({
+  env: "ENABLE_OPENAPI",
+  defaultValue: "1",
+});
 
 /**
- * Is Server in production
+ * Enable typegen endpoint
+ */
+export const ENABLE_TYPEGEN = getEnvFlag({
+  env: "ENABLE_TYPEGEN",
+  defaultValue: "1",
+});
+
+/**
+ * Enable HTTP compression
+ */
+export const ENABLE_COMPRESSION = getEnvFlag({
+  env: "ENABLE_COMPRESSION",
+  defaultValue: "1",
+});
+
+/**
+ * Trust proxy headers
+ */
+export const TRUST_PROXY = getEnvFlag({
+  env: "TRUST_PROXY",
+  defaultValue: "1",
+});
+
+/**
+ * Server in production mode
  */
 export const IS_PRODCTION = process.env.NODE_ENV === "production";
 
 /**
  * API version
- *
- * from: `package.json.version`
- *
- * value: String, ex: `0.0.0`
  */
 export const VERSION = getEnv({
   env: "npm_package_version",
   from: "package.json",
   field: "version",
+  defaultValue: "1.0.0",
 });
 
 /**
- * Server port to listen
- *
- * from: `env.PORT`
- *
- * value: Integer, ex: 4000
+ * Server port to listen (Node / Docker)
  */
-export const PORT = parseInt(getEnv({ env: "PORT" }));
+export const PORT = parseInt(getEnv({ env: "PORT", defaultValue: "3000" }), 10);
 
 /**
- * Server web base
- *
- * from: `env.VITE_WEB_BASE`
- *
- * value: String, ex: `/`
+ * Server web base URL path
  */
-export const BASE = getEnv({ env: "VITE_WEB_BASE" });
+export const BASE = getEnv({ env: "VITE_WEB_BASE", defaultValue: "/" });
 
 /**
- * Client output directory for Deployment
- *
- * from: `env.VITE_OUTDIR` + `/client`
- *
- * value: String, ex: `dist/client`
+ * Client output directory
  */
-export const OUTDIR = join(getEnv({ env: "VITE_OUTDIR" }), "client");
+export const OUTDIR = join(
+  getEnv({ env: "VITE_OUTDIR", defaultValue: "dist" }),
+  "client",
+);
 
 /**
- * Server restful API route prefix
- *
- * from: `env.VITE_API_ENDPOINT_RESTFUL`
- *
- * value: String, ex: `/api/restful`
+ * Hono RPC API endpoint route prefix
  */
-export const API_ENDPOINT_RESTFUL = getEnv({
-  env: "VITE_API_ENDPOINT_RESTFUL",
+export const API_ENDPOINT_RPC = getEnv({
+  env: "VITE_API_ENDPOINT_RPC",
+  defaultValue: process.env.VITE_API_ENDPOINT_TRPC || "/api",
 });
 
 /**
- * Server tRPC API route prefix
- *
- * from: `env.VITE_API_ENDPOINT_TRPC`
- *
- * value: String, ex: `/api/trpc`
+ * CORS allowed origin
  */
-export const API_ENDPOINT_TRPC = getEnv({ env: "VITE_API_ENDPOINT_TRPC" });
+export const CORS_ORIGIN = getEnv({ env: "CORS_ORIGIN", defaultValue: "*" });
 
 /**
- * encrypted cookie name
- *
- * from: `env.COOKIE_NAME`
- *
- * value: String, ex: `TestViteT3`
+ * Session cookie name
  */
-export const COOKIE_NAME = getEnv({ env: "COOKIE_NAME" });
+export const COOKIE_NAME = getEnv({
+  env: "COOKIE_NAME",
+  defaultValue: "TestViteT3",
+});
 
 /**
- * encrypted cookie secret
- *
- * from: `env.COOKIE_SECRET`
- *
- * value: String, ex: `a long secret at least 32 characters long`
+ * Session secret key (used by hono/jwt)
  */
-export const COOKIE_SECRET = getEnv({ env: "COOKIE_SECRET" });
+export const COOKIE_SECRET = getEnv({
+  env: "COOKIE_SECRET",
+  defaultValue: "a long secret at least 32 characters long",
+});
+
+/**
+ * Session TTL in seconds (default 7 days)
+ */
+export const SESSION_TTL = parseInt(
+  getEnv({ env: "SESSION_TTL", defaultValue: "604800" }),
+  10,
+);
+
+/**
+ * Deployment target
+ */
+export const DEPLOY_TARGET = getEnv({
+  env: "DEPLOY_TARGET",
+  defaultValue: "node",
+});
+
+/**
+ * Database driver
+ */
+export const DATABASE_DRIVER = getEnv({
+  env: "DATABASE_DRIVER",
+  defaultValue: "auto",
+});
+
+/**
+ * Database connection URL
+ */
+export const DATABASE_URL = getEnv({
+  env: "DATABASE_URL",
+  defaultValue: "file:./database.sqlite",
+});
 
 /**
  * OpenAPI doc title
- *
- * from: `env.VITE_TITLE` + `OpenAPI`
- *
- * value: String, ex: `Test Vite T3 OpenAPI`
  */
-export const DOC_TITLE = [getEnv({ env: "VITE_TITLE" }), "OpenAPI"].join(" ");
+export const DOC_TITLE = [
+  getEnv({ env: "VITE_TITLE", defaultValue: "Test Vite T3" }),
+  "OpenAPI",
+].join(" ");
 
 /**
  * OpenAPI doc route
- *
- * from: `env.VITE_WEB_BASE` + `env.VITE_API_OPENAPI_DOC_ROUTE`
- *
- * value: String, ex: `/openapi`
  */
 export const DOC_ROUTE = posix.join(
   BASE,
-  getEnv({ env: "VITE_API_OPENAPI_DOC_ROUTE" }),
+  getEnv({ env: "VITE_API_OPENAPI_DOC_ROUTE", defaultValue: "/openapi" }),
 );
 
 /**
  * OpenAPI typegen route
- *
- * from: `env.VITE_WEB_BASE` + `env.VITE_API_OPENAPI_DOC_ROUTE` + `/typegen`
- *
- * value: String, ex: `/openapi/typegen`
  */
 export const DOC_TYPEGEN_ROUTE = posix.join(DOC_ROUTE, "typegen");
 
 /**
  * OpenAPI static file path
- *
- * from: `env.VITE_WEB_BASE` + `env.VITE_API_OPENAPI_DOC_ROUTE` + `/assets`
- *
- * value: String, ex: `/openapi/assets`
  */
 export const DOC_STATIC_ROUTE = posix.join(DOC_ROUTE, "assets");
 
 /**
- * OpenAPI static file path
- *
- * In production from: `env.VITE_OUTDIR` + `/client/openapi`
- *
- * In development from `cwd()` + `/public/openapi`
- *
- * value: String, ex: `dist/client/openapi`
+ * OpenAPI static file system path
  */
 export const DOC_STATIC_PATH = IS_PRODCTION
   ? join(OUTDIR, "openapi")
@@ -214,34 +238,30 @@ export const DOC_STATIC_PATH = IS_PRODCTION
 
 /**
  * OpenAPI Swagger UI Description
- *
- * In production read from: `env.VITE_OUTDIR` + `/client/openapi/DESCRIPTION.md`
- *
- * In development read from `cwd()` + `/public/openapi/DESCRIPTION.md`
- *
- * value: String, ex: content from `dist/client/openapi/"DESCRIPTION.md`
  */
 export const DOC_DESCRIPTION = ENABLE_OPENAPI
-  ? readFileSync(
-      IS_PRODCTION
-        ? join(OUTDIR, "openapi", "DESCRIPTION.md")
-        : join(cwd(), "public", "openapi", "DESCRIPTION.md"),
-      {
-        encoding: "utf-8",
-      },
-    )
+  ? (() => {
+      try {
+        const descPath = IS_PRODCTION
+          ? join(OUTDIR, "openapi", "DESCRIPTION.md")
+          : join(cwd(), "public", "openapi", "DESCRIPTION.md");
+        return readFileSync(descPath, { encoding: "utf-8" });
+      } catch {
+        return "OpenAPI Documentation";
+      }
+    })()
   : undefined;
 
 /**
  * OpenAPI config
  */
-export const SWAGGER_UI_OPTIONS: SwaggerUiOptions = {
+export const SWAGGER_UI_OPTIONS: SwaggerUiCustomOptions = {
   customCssUrl: [
     posix.join(DOC_STATIC_ROUTE, "theme.css"),
     posix.join(DOC_STATIC_ROUTE, "fonts.css"),
     posix.join(DOC_STATIC_ROUTE, "custom.css"),
     posix.join(DOC_STATIC_ROUTE, "cookie.css"),
-  ] as unknown as string,
+  ],
   customJs: [
     posix.join(DOC_STATIC_ROUTE, "highlight.min.js"),
     posix.join(DOC_STATIC_ROUTE, "custom.js"),
@@ -263,12 +283,8 @@ export const SWAGGER_UI_OPTIONS: SwaggerUiOptions = {
   customfavIcon: "favicon.ico",
 };
 
-const timestamp = chalk.gray(
-  IS_PRODCTION
-    ? new Date().toLocaleTimeString("en-US")
-    : new Date().toLocaleTimeString("en-US"),
-);
-const plugin = chalk.bold.cyan("[vite-express]");
+const timestamp = chalk.gray(new Date().toLocaleTimeString("en-US"));
+const plugin = chalk.bold.cyan("[hono]");
 const message = chalk.green("Server Ready on");
 const serverUrl = chalk.bold(
   IS_PRODCTION

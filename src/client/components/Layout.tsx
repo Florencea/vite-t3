@@ -55,7 +55,7 @@ export const Layout = () => {
               <Button
                 type="text"
                 onClick={() => {
-                  logout.mutate({});
+                  logout.mutate();
                 }}
               >
                 {t("logout")}

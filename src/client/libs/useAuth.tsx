@@ -1,33 +1,49 @@
 import { useMutation } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
+import { api } from "../api";
 import type { RouterInputs } from "../constants/routes";
-import { useTRPC } from "../trpc";
 import { useAntdForm } from "./useAntdForm";
 
 export const useAuth = () => {
-  const trpc = useTRPC();
   const { t } = useTranslation("login");
 
-  const login = useMutation(
-    trpc.auth.login.mutationOptions({
-      onSuccess: () => {
-        window.location.reload();
-      },
-    }),
-  );
-  const logout = useMutation(
-    trpc.auth.logout.mutationOptions({
-      onSuccess: () => {
-        window.location.reload();
-      },
-    }),
-  );
+  const login = useMutation({
+    mutationFn: async (input: RouterInputs["auth"]["login"]) => {
+      const res = await api.auth.login.$post({ json: input });
+      if (!res.ok) {
+        const errorData = (await res.json().catch(() => ({}))) as {
+          error?: string;
+        };
+        throw new Error(errorData.error || "Login failed");
+      }
+      return res.json();
+    },
+    onSuccess: () => {
+      window.location.reload();
+    },
+  });
+
+  const logout = useMutation({
+    mutationFn: async () => {
+      const res = await api.auth.logout.$post({});
+      if (!res.ok) {
+        const errorData = (await res.json().catch(() => ({}))) as {
+          error?: string;
+        };
+        throw new Error(errorData.error || "Logout failed");
+      }
+      return res.json();
+    },
+    onSuccess: () => {
+      window.location.reload();
+    },
+  });
 
   const loginForm = useAntdForm<RouterInputs["auth"]["login"]>({
     formProps: {
       layout: "vertical",
       disabled: login.isPending,
-      onFinish: login.mutate,
+      onFinish: (values) => login.mutate(values),
     },
     formItemProps: {
       account: {

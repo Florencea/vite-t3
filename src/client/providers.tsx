@@ -1,19 +1,24 @@
 import "dayjs/locale/zh-tw";
 import "./global.css";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TRPCClientError, createTRPCClient, httpLink } from "@trpc/client";
+import {
+  QueryCache,
+  MutationCache,
+  QueryClient,
+  QueryClientProvider,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { RouterProvider } from "@tanstack/react-router";
 import { App, ConfigProvider, message } from "antd";
 import type { Locale } from "antd/es/locale";
 import enUS from "antd/es/locale/en_US";
 import zhTW from "antd/es/locale/zh_TW";
-import { StrictMode, useCallback, useEffect, useMemo, useState } from "react";
+import { StrictMode, useEffect, useMemo, useState } from "react";
 import { HeadProvider } from "react-head";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../i18n";
-import type { AppRouter } from "../server/router";
+import { router } from "./constants/routes";
 import { theme } from "./theme";
-import { TRPCProvider } from "./trpc";
 
 interface Props {
   children?: React.ReactNode;
@@ -28,15 +33,9 @@ const antdLocales: Record<string, Locale> = {
   "zh-TW": zhTW,
 };
 
-import { useQueryClient } from "@tanstack/react-query";
-import { RouterProvider } from "@tanstack/react-router";
-import { router } from "./constants/routes";
-import { useTRPC } from "./trpc";
-
 const AppRouterProvider = () => {
   const queryClient = useQueryClient();
-  const trpc = useTRPC();
-  return <RouterProvider router={router} context={{ queryClient, trpc }} />;
+  return <RouterProvider router={router} context={{ queryClient }} />;
 };
 
 export const Providers = ({ container }: { container: HTMLElement }) => {
@@ -46,6 +45,7 @@ export const Providers = ({ container }: { container: HTMLElement }) => {
     });
     window.document.documentElement.lang = i18n.language;
   }, []);
+
   return (
     <StrictMode>
       <I18nextProvider i18n={i18n}>
@@ -113,42 +113,35 @@ const AntdProvider = ({ container, children }: ProviderProps) => {
 
 const ApiProvider = ({ children }: Props) => {
   const [msg, msgContext] = message.useMessage();
-  const retry = useCallback(
-    (_: number, err: unknown) => {
-      if (err instanceof TRPCClientError && err.message !== "") {
-        void msg.error(err.message, 4.5);
-      }
-      return false;
-    },
-    [msg],
-  );
+
   const [queryClient] = useState(
     () =>
       new QueryClient({
+        queryCache: new QueryCache({
+          onError: (err) => {
+            if (err?.message) {
+              void msg.error(err.message, 4.5);
+            }
+          },
+        }),
+        mutationCache: new MutationCache({
+          onError: (err) => {
+            if (err?.message) {
+              void msg.error(err.message, 4.5);
+            }
+          },
+        }),
         defaultOptions: {
-          queries: { retry, refetchOnWindowFocus: false },
-          mutations: { retry },
+          queries: { retry: false, refetchOnWindowFocus: false },
+          mutations: { retry: false },
         },
       }),
   );
-  const [trpcClient] = useState(() =>
-    createTRPCClient<AppRouter>({
-      links: [
-        httpLink({
-          url: import.meta.env.VITE_API_ENDPOINT_TRPC,
-          headers: () => ({
-            "Accept-Language": i18n.language,
-          }),
-        }),
-      ],
-    }),
-  );
+
   return (
-    <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        {msgContext}
-        {children}
-      </QueryClientProvider>
-    </TRPCProvider>
+    <QueryClientProvider client={queryClient}>
+      {msgContext}
+      {children}
+    </QueryClientProvider>
   );
 };

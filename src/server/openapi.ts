@@ -1,23 +1,19 @@
-import { generateOpenApiDocument } from "trpc-to-openapi";
-import {
-  API_ENDPOINT_RESTFUL,
-  COOKIE_NAME,
-  DOC_DESCRIPTION,
-  DOC_TITLE,
-  VERSION,
-} from "./config.js";
-import { appRouter } from "./router.js";
+import { COOKIE_NAME, DOC_DESCRIPTION, DOC_TITLE, VERSION } from "./config.js";
 
-export const openapiDocs = generateOpenApiDocument(appRouter, {
-  title: DOC_TITLE,
-  version: VERSION,
-  description: DOC_DESCRIPTION,
-  baseUrl: API_ENDPOINT_RESTFUL,
-  securitySchemes: {
-    cookieAuth: {
-      type: "apiKey",
-      in: "cookie",
-      name: COOKIE_NAME,
+export const openapiConfig = {
+  openapi: "3.0.0",
+  info: {
+    title: DOC_TITLE,
+    version: VERSION,
+    description: DOC_DESCRIPTION,
+  },
+  components: {
+    securitySchemes: {
+      cookieAuth: {
+        type: "apiKey" as const,
+        in: "cookie" as const,
+        name: COOKIE_NAME,
+      },
     },
   },
-});
+};

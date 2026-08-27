@@ -1,12 +1,7 @@
-import { initTRPC } from "@trpc/server";
-import type { OpenApiMeta } from "trpc-to-openapi";
-import type { Context } from "./context";
-import { auth } from "./procedure/auth";
+import { OpenAPIHono } from "@hono/zod-openapi";
+import { authRouter } from "./routes/auth.js";
 
-const t = initTRPC.context<Context>().meta<OpenApiMeta>().create();
+export const apiRouter = new OpenAPIHono().route("/auth", authRouter);
 
-export const appRouter = t.router({
-  auth,
-});
-
-export type AppRouter = typeof appRouter;
+export type AppRouter = typeof apiRouter;
+export type AppType = typeof apiRouter;
