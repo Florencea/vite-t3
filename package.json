@@ -36,7 +36,7 @@
     "cors": "2.8.6",
     "dayjs": "1.11.23",
     "dotenv": "17.4.2",
-    "drizzle-orm": "1.0.0-rc.4",
+    "drizzle-orm": "1.0.0-rc.5-ab785fc",
     "express": "5.2.1",
     "helmet": "8.3.0",
     "i18next": "26.4.0",
