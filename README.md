@@ -1,6 +1,6 @@
 # Vite T3
 
-A fullstack project inspired by the T3 stack, built with Vite, React, tRPC, Prisma, and Express.
+A fullstack project inspired by the T3 stack, built with Vite, React, tRPC, Drizzle ORM, and Express.
 
 ## Quick Start
 
@@ -14,7 +14,7 @@ npm ci
 cp .env.example .env
 
 # 3. Database Migration & Seeding
-npm run db:migrate
+npm run db:push
 npm run db:seed
 
 # 4. Start Development Server
@@ -26,7 +26,7 @@ npm run dev
 - `src/client/`: Frontend (React, Vite, TailwindCSS)
 - `src/server/`: Backend (Express, tRPC, OpenAPI)
 - `src/locales/`: i18n configurations
-- `prisma/`: Database schema & SQLite
+- `src/server/database/`: Drizzle ORM schema & database connection
 
 ## Core Scripts
 
@@ -34,6 +34,8 @@ npm run dev
 - `npm run build`: Typecheck, lint, and build for production.
 - `npm run preview`: Build and preview the production server locally (cross-platform).
 - `npm run start`: Start production server (requires built files and `NODE_ENV=production` set by host environment).
-- `npm run db:studio`: Open Prisma Studio.
+- `npm run db:push`: Push schema changes to the database using Drizzle Kit.
+- `npm run db:seed`: Seed the database with initial data.
+- `npm run db:studio`: Open Drizzle Studio.
 
 _Note: You can toggle frontend, backend, and OpenAPI modules by modifying `ENABLE_CLIENT`, `ENABLE_SERVER`, and `ENABLE_OPENAPI` in your `.env` file._

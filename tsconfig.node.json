@@ -20,5 +20,5 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["vite.config.ts", "prisma.config.ts"]
+  "include": ["vite.config.ts", "drizzle.config.ts"]
 }

@@ -1,4 +1,7 @@
-import { prisma } from "./index";
+import argon2 from "argon2";
+import { eq } from "drizzle-orm";
+import { db } from "./index.js";
+import { users } from "./schema.js";
 
 const DEFAULT_ADMIN = {
   account: "admin",
@@ -6,20 +9,30 @@ const DEFAULT_ADMIN = {
 };
 
 async function main() {
-  await prisma.user.upsert({
-    where: {
-      account: DEFAULT_ADMIN.account,
-    },
-    create: DEFAULT_ADMIN,
-    update: DEFAULT_ADMIN,
+  const hashedPassword = await argon2.hash(DEFAULT_ADMIN.password);
+  const existing = await db.query.users.findFirst({
+    where: (u, { eq }) => eq(u.account, DEFAULT_ADMIN.account),
   });
+
+  if (existing) {
+    await db
+      .update(users)
+      .set({ password: hashedPassword, updatedAt: new Date() })
+      .where(eq(users.account, DEFAULT_ADMIN.account));
+  } else {
+    await db.insert(users).values({
+      account: DEFAULT_ADMIN.account,
+      password: hashedPassword,
+    });
+  }
 }
+
 main()
-  .then(async () => {
-    await prisma.$disconnect();
+  .then(() => {
+    console.log("Database seed completed.");
+    process.exit(0);
   })
-  .catch(async (e) => {
+  .catch((e) => {
     console.error(e);
-    await prisma.$disconnect();
     process.exit(1);
   });

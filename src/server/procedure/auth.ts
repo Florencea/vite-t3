@@ -3,7 +3,7 @@ import { verify } from "argon2";
 import type { OpenApiMeta } from "trpc-to-openapi";
 import { z } from "zod";
 import type { Context } from "../context.js";
-import { prisma } from "../database/index.js";
+import { db } from "../database/index.js";
 import { authorizedProcedure } from "./_authorized.js";
 import { publicProcedure } from "./_unauthorized.js";
 
@@ -29,7 +29,9 @@ const login = publicProcedure
   .output(z.object({}))
   .mutation(async (opts) => {
     const { account, password } = opts.input;
-    const user = await prisma.user.findUnique({ where: { account } });
+    const user = await db.query.users.findFirst({
+      where: (u, { eq }) => eq(u.account, account),
+    });
     if (!user)
       throw new TRPCError({
         code: "BAD_REQUEST",

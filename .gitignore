@@ -27,8 +27,7 @@ dist-ssr
 # env
 .env
 
-# prisma
-/prisma/*
-!/prisma/*.prisma
-!/prisma/extensions
-!/prisma/*.ts
+# database & sqlite
+*.sqlite
+*.sqlite-journal
+database.sqlite
