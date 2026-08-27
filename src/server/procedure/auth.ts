@@ -30,7 +30,7 @@ const login = publicProcedure
   .mutation(async (opts) => {
     const { account, password } = opts.input;
     const user = await db.query.users.findFirst({
-      where: (u, { eq }) => eq(u.account, account),
+      where: { account },
     });
     if (!user)
       throw new TRPCError({

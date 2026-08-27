@@ -11,7 +11,7 @@ const DEFAULT_ADMIN = {
 async function main() {
   const hashedPassword = await argon2.hash(DEFAULT_ADMIN.password);
   const existing = await db.query.users.findFirst({
-    where: (u, { eq }) => eq(u.account, DEFAULT_ADMIN.account),
+    where: { account: DEFAULT_ADMIN.account },
   });
 
   if (existing) {
