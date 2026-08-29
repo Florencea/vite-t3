@@ -45,21 +45,24 @@ npm run dev
 
 ## Environment Variables (`.env`)
 
-| Variable             | Default                  | Description                                                   |
-| :------------------- | :----------------------- | :------------------------------------------------------------ |
-| `ENABLE_CLIENT`      | `1`                      | Enable frontend SPA hosting (`1` = yes, `0` = no)             |
-| `ENABLE_SERVER`      | `1`                      | Enable backend API server (`1` = yes, `0` = no)               |
-| `ENABLE_OPENAPI`     | `1`                      | Enable OpenAPI doc and Swagger UI (`/openapi`)                |
-| `ENABLE_TYPEGEN`     | `1`                      | Enable typegen route (`/openapi/typegen`)                     |
-| `ENABLE_COMPRESSION` | `1`                      | Enable HTTP compression (`hono/compress`)                     |
-| `TRUST_PROXY`        | `1`                      | Trust reverse proxy headers                                   |
-| `DEPLOY_TARGET`      | `node`                   | Deployment target (`node` / `docker` / `cloudflare` / `auto`) |
-| `PORT`               | `3000`                   | Server listening port                                         |
-| `DATABASE_DRIVER`    | `auto`                   | Database driver (`sqlite` / `d1` / `libsql` / `auto`)         |
-| `DATABASE_URL`       | `file:./database.sqlite` | SQLite / LibSQL connection string                             |
-| `COOKIE_NAME`        | `TestViteT3`             | Session cookie name                                           |
-| `COOKIE_SECRET`      | 32+ chars secret         | Cookie encryption & signing secret                            |
-| `SESSION_TTL`        | `604800`                 | Session TTL in seconds (7 days)                               |
+| Variable                     | Default                  | Description                                                            |
+| :--------------------------- | :----------------------- | :--------------------------------------------------------------------- |
+| `VITE_TITLE`                 | `Test Vite T3`           | Application title shown in browser and OpenAPI doc                     |
+| `VITE_WEB_BASE`              | `/`                      | Base URL path for web routing and assets                               |
+| `VITE_API_OPENAPI_DOC_ROUTE` | `/openapi`               | OpenAPI documentation route path                                       |
+| `VITE_API_ENDPOINT_RPC`      | `/api`                   | Hono RPC endpoint route path                                           |
+| `VITE_OUTDIR`                | `dist`                   | Production build output directory                                      |
+| `ENABLE_CLIENT`              | `1`                      | Enable frontend SPA hosting (`1` = yes, `0` = no)                      |
+| `ENABLE_SERVER`              | `1`                      | Enable backend API server (`1` = yes, `0` = no)                        |
+| `ENABLE_OPENAPI`             | `1`                      | Enable OpenAPI doc and Swagger UI (`/openapi`)                         |
+| `ENABLE_TYPEGEN`             | `1`                      | Enable typegen route (`/openapi/typegen`)                              |
+| `ENABLE_COMPRESSION`         | `1`                      | Enable HTTP compression (`hono/compress`)                              |
+| `PORT`                       | `3000`                   | Server listening port (Node / Docker)                                  |
+| `CORS_ORIGIN`                | `*`                      | Allowed CORS origin (use specific origin when credentials are enabled) |
+| `DATABASE_URL`               | `file:./database.sqlite` | SQLite / LibSQL connection URL                                         |
+| `COOKIE_NAME`                | `TestViteT3`             | Session cookie name                                                    |
+| `COOKIE_SECRET`              | 32+ chars secret         | Cookie encryption & signing secret                                     |
+| `SESSION_TTL`                | `604800`                 | Session TTL in seconds (7 days)                                        |
 
 ---
 

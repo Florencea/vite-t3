@@ -102,17 +102,9 @@ export const ENABLE_COMPRESSION = getEnvFlag({
 });
 
 /**
- * Trust proxy headers
- */
-export const TRUST_PROXY = getEnvFlag({
-  env: "TRUST_PROXY",
-  defaultValue: "1",
-});
-
-/**
  * Server in production mode
  */
-export const IS_PRODCTION = process.env.NODE_ENV === "production";
+export const IS_PRODUCTION = process.env.NODE_ENV === "production";
 
 /**
  * API version
@@ -147,7 +139,7 @@ export const OUTDIR = join(
  */
 export const API_ENDPOINT_RPC = getEnv({
   env: "VITE_API_ENDPOINT_RPC",
-  defaultValue: process.env.VITE_API_ENDPOINT_TRPC || "/api",
+  defaultValue: "/api",
 });
 
 /**
@@ -178,22 +170,6 @@ export const SESSION_TTL = parseInt(
   getEnv({ env: "SESSION_TTL", defaultValue: "604800" }),
   10,
 );
-
-/**
- * Deployment target
- */
-export const DEPLOY_TARGET = getEnv({
-  env: "DEPLOY_TARGET",
-  defaultValue: "node",
-});
-
-/**
- * Database driver
- */
-export const DATABASE_DRIVER = getEnv({
-  env: "DATABASE_DRIVER",
-  defaultValue: "auto",
-});
 
 /**
  * Database connection URL
@@ -232,7 +208,7 @@ export const DOC_STATIC_ROUTE = posix.join(DOC_ROUTE, "assets");
 /**
  * OpenAPI static file system path
  */
-export const DOC_STATIC_PATH = IS_PRODCTION
+export const DOC_STATIC_PATH = IS_PRODUCTION
   ? join(OUTDIR, "openapi")
   : join(cwd(), "public", "openapi");
 
@@ -242,7 +218,7 @@ export const DOC_STATIC_PATH = IS_PRODCTION
 export const DOC_DESCRIPTION = ENABLE_OPENAPI
   ? (() => {
       try {
-        const descPath = IS_PRODCTION
+        const descPath = IS_PRODUCTION
           ? join(OUTDIR, "openapi", "DESCRIPTION.md")
           : join(cwd(), "public", "openapi", "DESCRIPTION.md");
         return readFileSync(descPath, { encoding: "utf-8" });
@@ -287,7 +263,7 @@ const timestamp = chalk.gray(new Date().toLocaleTimeString("en-US"));
 const plugin = chalk.bold.cyan("[hono]");
 const message = chalk.green("Server Ready on");
 const serverUrl = chalk.bold(
-  IS_PRODCTION
+  IS_PRODUCTION
     ? `port: ${PORT}, base: ${BASE}`
     : `http://localhost:${PORT}${BASE}`,
 );

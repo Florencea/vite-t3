@@ -2,13 +2,9 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { compress } from "hono/compress";
 import { cors } from "hono/cors";
 import { secureHeaders } from "hono/secure-headers";
-import { i18nMiddleware } from "./i18n.js";
-import { openapiConfig } from "./openapi.js";
-import { apiRouter } from "./router.js";
-import { renderSwaggerUiHtml } from "./swagger.js";
-import { typegenRouter } from "./typegen.js";
 import {
   API_ENDPOINT_RPC,
+  CORS_ORIGIN,
   DOC_ROUTE,
   DOC_TYPEGEN_ROUTE,
   ENABLE_COMPRESSION,
@@ -17,6 +13,11 @@ import {
   ENABLE_TYPEGEN,
   SWAGGER_UI_OPTIONS,
 } from "./config.js";
+import { i18nMiddleware } from "./i18n.js";
+import { openapiConfig } from "./openapi.js";
+import { apiRouter } from "./router.js";
+import { renderSwaggerUiHtml } from "./swagger.js";
+import { typegenRouter } from "./typegen.js";
 
 const app = new OpenAPIHono();
 
@@ -26,7 +27,7 @@ if (ENABLE_SERVER) {
   }
 
   app.use("*", secureHeaders());
-  app.use("*", cors({ origin: "*", credentials: true }));
+  app.use("*", cors({ origin: CORS_ORIGIN, credentials: true }));
   app.use("*", i18nMiddleware);
 
   app.route(API_ENDPOINT_RPC, apiRouter);

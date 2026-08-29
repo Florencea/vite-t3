@@ -4,8 +4,8 @@ import { OpenAPIHono } from "@hono/zod-openapi";
 import { compress } from "hono/compress";
 import { cors } from "hono/cors";
 import { secureHeaders } from "hono/secure-headers";
+import { existsSync, readFileSync } from "node:fs";
 import type { IncomingMessage, Server, ServerResponse } from "node:http";
-import { readFileSync, existsSync } from "node:fs";
 import { join, posix } from "node:path";
 import { cwd } from "node:process";
 import { createServer as createViteServer } from "vite";
@@ -22,7 +22,7 @@ import {
   ENABLE_OPENAPI,
   ENABLE_SERVER,
   ENABLE_TYPEGEN,
-  IS_PRODCTION,
+  IS_PRODUCTION,
   OUTDIR,
   PORT,
   SERVER_READY_MESSAGE,
@@ -44,7 +44,7 @@ if (ENABLE_SERVER) {
     app.use("*", compress());
   }
 
-  if (IS_PRODCTION) {
+  if (IS_PRODUCTION) {
     app.use("*", secureHeaders());
   }
 
@@ -117,7 +117,7 @@ interface NodeBindings {
 let viteDevServer: Awaited<ReturnType<typeof createViteServer>> | undefined;
 
 if (ENABLE_CLIENT) {
-  if (IS_PRODCTION) {
+  if (IS_PRODUCTION) {
     // Serve production build static files
     app.use(
       "*",

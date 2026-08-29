@@ -1,12 +1,12 @@
+import { verify as argonVerify } from "argon2";
+import type { Context, MiddlewareHandler } from "hono";
 import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 import { HTTPException } from "hono/http-exception";
 import { sign, verify } from "hono/jwt";
-import type { Context, MiddlewareHandler } from "hono";
-import { verify as argonVerify } from "argon2";
 import {
   COOKIE_NAME,
   COOKIE_SECRET,
-  IS_PRODCTION,
+  IS_PRODUCTION,
   SESSION_TTL,
 } from "./config.js";
 
@@ -46,7 +46,7 @@ export async function setSession(
 
   setCookie(c, COOKIE_NAME, token, {
     httpOnly: true,
-    secure: IS_PRODCTION,
+    secure: IS_PRODUCTION,
     sameSite: "Lax",
     path: "/",
     maxAge: SESSION_TTL,
@@ -56,7 +56,7 @@ export async function setSession(
 export function deleteSession(c: Context): void {
   deleteCookie(c, COOKIE_NAME, {
     path: "/",
-    secure: IS_PRODCTION,
+    secure: IS_PRODUCTION,
   });
 }
 

@@ -3,5 +3,7 @@ dist
 .git
 .vscode
 database.sqlite
-.env.local
+.env
+.env.*
+!.env.example
 *.log
