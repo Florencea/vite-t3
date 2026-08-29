@@ -38,14 +38,8 @@ const ServerBuilder = (): PluginOption => {
         build: {
           ssr: "./src/server/app.ts",
           outDir: join(".", VITE_OUTDIR, "server"),
-          emptyOutDir: true,
           chunkSizeWarningLimit: Infinity,
           reportCompressedSize: false,
-          rolldownOptions: {
-            output: {
-              format: "es",
-            },
-          },
         },
       });
     },
@@ -92,13 +86,11 @@ export default defineConfig({
   base: VITE_WEB_BASE,
   build: {
     outDir: enableServer ? join(".", VITE_OUTDIR, "client") : VITE_OUTDIR,
-    emptyOutDir: true,
     chunkSizeWarningLimit: Infinity,
     reportCompressedSize: false,
   },
   plugins: [
     tanstackRouter({
-      target: "react",
       autoCodeSplitting: true,
       routesDirectory: "./src/client/routes",
       generatedRouteTree: "./src/client/routeTree.gen.ts",
