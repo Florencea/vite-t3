@@ -44,7 +44,7 @@
     "react-dom": "19.2.8",
     "react-head": "3.4.2",
     "react-i18next": "17.0.12",
-    "zod": "4.4.3"
+    "zod": "4.5.4"
   },
   "devDependencies": {
     "@ant-design/icons": "6.3.4",
