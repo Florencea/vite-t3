@@ -7,12 +7,11 @@ import {
 import { Layout as AntdLayout, Button, Menu, Typography, theme } from "antd";
 import clsx from "clsx";
 import { useState } from "react";
-import { Title } from "react-head";
 import { useTranslation } from "react-i18next";
 import logo from "../assets/logo.png";
-import { useSiteTitle } from "../constants/routes";
 import { useAuth } from "../libs/useAuth";
 import { useUserInfo } from "../libs/useUserInfo";
+import { DocTitle } from "./DocTitle";
 import { I18nSwitcher } from "./i18n-switcher";
 
 const { Header, Sider, Content } = AntdLayout;
@@ -22,14 +21,13 @@ export const Layout = () => {
   const { t } = useTranslation("header");
   const { token } = theme.useToken();
   const routerState = useRouterState();
-  const title = useSiteTitle();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
   const { logout } = useAuth();
   const { isLogin, account, menuItems } = useUserInfo();
   return (
     <>
-      <Title>{title}</Title>
+      <DocTitle />
       <AntdLayout className="h-svh max-w-svw">
         {isLogin && (
           <Header

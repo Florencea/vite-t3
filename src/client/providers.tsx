@@ -2,8 +2,8 @@ import "dayjs/locale/zh-tw";
 import "./global.css";
 
 import {
-  QueryCache,
   MutationCache,
+  QueryCache,
   QueryClient,
   QueryClientProvider,
   useQueryClient,
@@ -14,7 +14,6 @@ import type { Locale } from "antd/es/locale";
 import enUS from "antd/es/locale/en_US";
 import zhTW from "antd/es/locale/zh_TW";
 import { StrictMode, useEffect, useMemo, useState } from "react";
-import { HeadProvider } from "react-head";
 import { I18nextProvider, useTranslation } from "react-i18next";
 import i18n from "../i18n";
 import { router } from "./constants/routes";
@@ -49,15 +48,11 @@ export const Providers = ({ container }: { container: HTMLElement }) => {
   return (
     <StrictMode>
       <I18nextProvider i18n={i18n}>
-        <HeadProvider
-          headTags={[<title key="title">{import.meta.env.VITE_TITLE}</title>]}
-        >
-          <ApiProvider>
-            <AntdProvider container={container}>
-              <AppRouterProvider />
-            </AntdProvider>
-          </ApiProvider>
-        </HeadProvider>
+        <ApiProvider>
+          <AntdProvider container={container}>
+            <AppRouterProvider />
+          </AntdProvider>
+        </ApiProvider>
       </I18nextProvider>
     </StrictMode>
   );
